@@ -1,8 +1,8 @@
 # Template file for 'libkdcraw5'
+# XXX: sync version with libkdcraw
 pkgname=libkdcraw5
-version=22.04.2
+version=24.08.1
 revision=1
-wrksrc="libkdcraw-${version}"
 build_style=cmake
 hostmakedepends="extra-cmake-modules pkg-config qt5-qmake qt5-host-tools
  gettext"
@@ -12,7 +12,7 @@ maintainer="Helmut Pozimski <helmut@pozimski.eu>"
 license="GPL-2.0-or-later"
 homepage="https://www.kde.org/applications/graphics/"
 distfiles="${KDE_SITE}/release-service/${version}/src/libkdcraw-${version}.tar.xz"
-checksum=c669f629077df69febba2e1fbd91dd6452fa49b14f6b1ac382e177c7423828fd
+checksum=dceda2ebbf7479ba232e9108d1cf58d613df0fa76c990106ee59dbba8c9c32f6
 
 libkdcraw5-devel_package() {
 	depends="${sourcepkg}>=${version}_${revision}"

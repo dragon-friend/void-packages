@@ -1,9 +1,9 @@
 # Template file for 'mozo'
 pkgname=mozo
-version=1.26.1
+version=1.28.0
 revision=1
-build_style=gnu-configure
-hostmakedepends="intltool itstool pkg-config"
+build_style=meson
+hostmakedepends="pkg-config gettext"
 makedepends="glib-devel mate-menus-devel python3-gobject-devel"
 depends="desktop-file-utils gtk+3 mate-menus python3-gobject"
 short_desc="MATE menu editing tool"
@@ -12,4 +12,4 @@ license="LGPL-2.1-or-later"
 homepage="https://mate-desktop.org"
 changelog="https://raw.githubusercontent.com/mate-desktop/mozo/master/NEWS"
 distfiles="https://pub.mate-desktop.org/releases/${version%.*}/mozo-${version}.tar.xz"
-checksum=0f24429a3b037bd0688ec4c391d9d8781e42b23ef345f5e50af1e72c5ef2fa39
+checksum=fe98984ffd6aa8c36d0594bcefdba03de39b42d41e007251680384f3cef44924

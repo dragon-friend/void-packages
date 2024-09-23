@@ -1,6 +1,6 @@
 # Template file for 'radare2'
 pkgname=radare2
-version=5.7.0
+version=5.9.4
 revision=1
 build_style=meson
 configure_args="-Denable_tests=false -Duse_sys_capstone=true
@@ -11,11 +11,11 @@ hostmakedepends="pkg-config"
 makedepends="capstone-devel file-devel xxHash-devel openssl-devel libuv-devel
  zlib-devel libzip-devel liblz4-devel"
 short_desc="Advanced command line debugger and hexadecimal editor"
-maintainer="Orphaned <orphan@voidlinux.org>"
+maintainer="yosh <yosh-git@riseup.net>"
 license="LGPL-3.0-only"
 homepage="https://www.radare.org"
 distfiles="https://github.com/radareorg/radare2/archive/${version}.tar.gz"
-checksum=fe7ca861bf71dd3c4766a57f73fd97b216bcfde161720f949c05875df212976b
+checksum=4b194a73ce8dfe12c0b8c70cf6af449260119588ceacc205ac95570bbf17cdd3
 
 case "$XBPS_TARGET_MACHINE" in
 	mips*) CFLAGS="-Os";;

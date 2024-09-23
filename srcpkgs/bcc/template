@@ -1,24 +1,26 @@
 # Template file for 'bcc'
 pkgname=bcc
-version=0.24.0
+version=0.31.0
 revision=1
-wrksrc="bcc"
 build_style=cmake
 configure_args="-DREVISION=${version} -DENABLE_LLVM_SHARED=1"
-hostmakedepends="flex python3"
-makedepends="clang clang-tools-extra elfutils-devel flex lld-devel llvm
+hostmakedepends="flex python3-setuptools"
+_llvmver=17
+makedepends="clang${_llvmver} clang-tools-extra${_llvmver} elfutils-devel flex lld${_llvmver}-devel llvm${_llvmver}-devel
  ncurses-devel python3-devel zlib-devel"
 short_desc="BPF-based Linux IO analysis, networking, monitoring, and more"
 maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="Apache-2.0"
 homepage="https://github.com/iovisor/bcc"
 distfiles="https://github.com/iovisor/bcc/releases/download/v${version}/bcc-src-with-submodule.tar.gz>bcc-${version}.tar.gz"
-checksum=4ff35d71f1dc3b6fc5626bbb7644afc9eb0953be23e873c61034c8f50c589268
+checksum=539a9e937b42f79ec525a05daa1b2a4ce0bf444fc692e2ac21e618f91605e089
 python_version="3"
 
-if [ "$XBPS_TARGET_NO_ATOMIC8" ]; then
-	makedepends+=" libatomic-devel"
-fi
+# bug in llvm17-devel dependencies
+case "$XBPS_TARGET_MACHINE" in
+x86_64*|aarch64*)
+	makedepends+=" libomp-devel"
+esac
 
 post_extract() {
 	sed -i '/tests/d' CMakeLists.txt  # break on musl
@@ -55,6 +57,7 @@ bcc-devel_package() {
 	depends="${sourcepkg}>=${version}_${revision}"
 	pkg_install() {
 		vmove usr/include
+		vmove usr/lib/*.a
 		vmove usr/lib/*.so
 		vmove usr/lib/pkgconfig
 		vmove usr/share/bcc/examples

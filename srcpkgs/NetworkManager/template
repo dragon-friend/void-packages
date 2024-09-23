@@ -1,6 +1,6 @@
 # Template file for 'NetworkManager'
 pkgname=NetworkManager
-version=1.38.0
+version=1.48.10
 revision=1
 build_style=meson
 build_helper="gir qemu"
@@ -9,20 +9,20 @@ configure_args="-Dsystemd_journal=false
  -Dmodify_system=true -Dsystemdsystemunitdir=no
  -Dpppd=/usr/bin/pppd -Dqt=false
  -Dsession_tracking_consolekit=false
- -Dpppd_plugin_dir=/usr/lib/pppd/2.4.9 -Dresolvconf=/usr/bin/resolvconf
+ -Dresolvconf=/usr/bin/resolvconf
  -Ddhclient=/usr/bin/dhclient -Dkernel_firmware_dir=/usr/lib/firmware
  -Ddnsmasq=/usr/bin/dnsmasq -Ddbus_conf_dir=/etc/dbus-1/system.d
- -Ddhcpcd=/usr/bin/dhcpcd -Diptables=/usr/bin/iptables
+ -Ddhcpcd=/usr/bin/dhcpcd -Diptables=/usr/bin/iptables -Dnft=/usr/bin/nft
  -Diwd=true -Dudev_dir=/usr/lib/udev -Ddocs=true
  $(vopt_bool gir introspection) $(vopt_bool gir vapi)
  -Dsession_tracking=$(vopt_if elogind elogind no)
  -Dsuspend_resume=$(vopt_if elogind elogind upower)
  -Dconfig_dhcp_default=internal"
 hostmakedepends="gettext-devel glib-devel libxslt-devel pkg-config
- intltool dbus-glib-devel docbook-xsl gtk-doc
+ dbus-glib-devel docbook-xsl gtk-doc polkit-devel perl
  $(vopt_if gir 'vala python3-gobject')"
 makedepends="libuuid-devel nss-devel dbus-glib-devel libgudev-devel
- libnl3-devel polkit-devel ppp-devel iptables-devel libcurl-devel
+ libnl3-devel polkit-devel ppp-devel libcurl-devel
  ModemManager-devel readline-devel libndp-devel newt-devel jansson-devel
  libpsl-devel eudev-libudev-devel mobile-broadband-provider-info gnutls-devel
  $(vopt_if gir 'libgirepository-devel python3-gobject')
@@ -33,13 +33,13 @@ short_desc="Network Management daemon"
 maintainer="Enno Boland <gottox@voidlinux.org>"
 license="GPL-2.0-or-later"
 homepage="https://wiki.gnome.org/Projects/NetworkManager"
-changelog="https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/raw/nm-1-36/NEWS"
-distfiles="${GNOME_SITE}/${pkgname}/${version%.*}/${pkgname}-${version}.tar.xz"
-checksum=82a4cf07ddfeb0816787b67c0f5058ae6c50d6259c0b0541a24e35156062b2ef
+changelog="https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/raw/nm-1-48/NEWS"
+distfiles="${GNOME_SITE}/NetworkManager/${version%.*}/NetworkManager-${version}.tar.xz"
+checksum=5dc188fdffcf2d23c89d34b1e6319a6b20203e12eaec24b30037b7ea8ac8c613
 # TODO: Some tests require network namespaces to run.
 make_check=extended
 lib32disabled=yes
-conf_files="/etc/${pkgname}/${pkgname}.conf"
+conf_files="/etc/NetworkManager/NetworkManager.conf"
 make_dirs="
  /etc/NetworkManager/system-connections 0755 root root
  /etc/NetworkManager/dispatcher.d/pre-up.d 0750 root root
@@ -60,7 +60,7 @@ post_patch() {
 			-e "s|@XBPS_TARGET_QEMU_MACHINE@|${XBPS_TARGET_QEMU_MACHINE}|" \
 			src/libnm-client-impl/meson.build
 		# https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/issues/955
-		vsed -e "s#jansson_dep.get_pkgconfig_variable('libdir')#'${XBPS_CROSS_BASE}/usr/lib'#" \
+		vsed -e "s#jansson_dep.get_variable(pkgconfig: 'libdir')#'${XBPS_CROSS_BASE}/usr/lib'#" \
 			-i meson.build
 	fi
 }
@@ -75,10 +75,10 @@ post_check() {
 }
 
 post_install() {
-	vinstall ${FILESDIR}/${pkgname}.conf 644 etc/${pkgname}
+	vinstall ${FILESDIR}/NetworkManager.conf 644 etc/NetworkManager
 	vinstall ${FILESDIR}/50-org.freedesktop.NetworkManager.rules 644 \
 		/usr/share/polkit-1/rules.d
-	vsv ${pkgname}
+	vsv NetworkManager
 }
 
 libnm_package() {

@@ -1,6 +1,6 @@
 # Template file for 'scite'
 pkgname=scite
-version=5.2.3
+version=5.5.2
 revision=1
 create_wrksrc=yes
 hostmakedepends="pkg-config"
@@ -10,9 +10,10 @@ maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="MIT"
 homepage="https://www.scintilla.org/SciTEDownload.html"
 distfiles="https://www.scintilla.org/scite${version//./}.tgz"
-checksum=e0dbc30cfe5a3c255b5b00b9491796561de68eea36203811acabbcb7127aa6ae
+checksum=41f9eedc06e689d73cafa11cca4b696815163577344793ee01e3e5aa59e10674
 
 post_extract() {
+	sed -i '1i#include <cstddef>' scite/src/StringList.h
 	sed -i 's/gthread-2.0/& lua/' scite/gtk/makefile
 }
 

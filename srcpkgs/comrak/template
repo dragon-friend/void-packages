@@ -1,22 +1,17 @@
 # Template file for 'comrak'
 pkgname=comrak
-version=0.13.0
+version=0.28.0
 revision=1
 build_style=cargo
+hostmakedepends="pkg-config"
+makedepends="oniguruma-devel"
 short_desc="CommonMark + GFM compatible Markdown parser and renderer"
-maintainer="jcgruenhage <jan.christian@gruenhage.xyz>"
+maintainer="Orphaned <orphan@voidlinux.org>"
 license="BSD-2-Clause"
 homepage="https://github.com/kivikakk/comrak"
-distfiles="https://github.com/kivikakk/comrak/archive/${version}.tar.gz"
-checksum=e4b65fd55ef0dfc3835f24a5234a52b457534a2b500971f4c2e800f4ee889a69
-
-case "$XBPS_TARGET_MACHINE" in
-	i686*) broken="LLVM ran out of registers during register allocation: https://pastebin.com/raw/DLCa9nEz" ;;
-esac
-
-post_patch() {
-	cargo update -p autocfg:1.0.1 --precise 1.1.0
-}
+changelog="https://raw.githubusercontent.com/kivikakk/comrak/main/changelog.txt"
+distfiles="https://github.com/kivikakk/comrak/archive/refs/tags/v${version}.tar.gz"
+checksum=7e1ef40ebf2a27faaad7c2068e32d2109726f6daf42ba64705e7a250a9b0a162
 
 post_install() {
 	vlicense COPYING

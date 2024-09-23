@@ -1,14 +1,16 @@
 # Template file for 'gnome-sudoku'
 pkgname=gnome-sudoku
-version=40.2
+version=46.4
 revision=1
-build_helper="gir"
 build_style=meson
-hostmakedepends="gettext glib-devel itstool pkg-config vala"
-makedepends="gtk+3-devel libgee08-devel json-glib-devel qqwing-devel"
+hostmakedepends="gettext glib-devel itstool pkg-config vala
+ desktop-file-utils gtk4-update-icon-cache"
+makedepends="gtk4-devel libadwaita-devel libgee-devel json-glib-devel qqwing-devel"
+checkdepends="appstream-glib"
 short_desc="GNOME Sudoku Japanese logic game"
-maintainer="Orphaned <orphan@voidlinux.org>"
+maintainer="icp <pangolin@vivaldi.net>"
 license="GPL-3.0-or-later"
-homepage="https://wiki.gnome.org/Apps/Sudoku"
-distfiles="${GNOME_SITE}/${pkgname}/${version%.*}/${pkgname}-${version}.tar.xz"
-checksum=36120531e3c7139581ea3800fbfe3c2b31694c440145ecc897ac34e562d754a3
+homepage="https://gitlab.gnome.org/GNOME/gnome-sudoku/-/wikis/home"
+changelog="https://gitlab.gnome.org/GNOME/gnome-sudoku/-/raw/master/NEWS"
+distfiles="${GNOME_SITE}/gnome-sudoku/${version%.*}/gnome-sudoku-${version}.tar.xz"
+checksum=4a6b0c4506e89512253b1c993b73f640e8efd9ac1f1eb52a024819087623a4a2

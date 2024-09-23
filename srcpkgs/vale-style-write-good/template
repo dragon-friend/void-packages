@@ -2,9 +2,8 @@
 pkgname=vale-style-write-good
 version=0.4.0
 revision=1
-wrksrc=write-good-${version}
 short_desc="Vale-compatible implementation of the write-good linter"
-maintainer="Paper <paper@tilde.institute>"
+maintainer="Orphaned <orphan@voidlinux.org>"
 license="MIT"
 homepage="https://github.com/errata-ai/write-good/"
 distfiles="https://github.com/errata-ai/write-good/archive/v${version}.tar.gz"

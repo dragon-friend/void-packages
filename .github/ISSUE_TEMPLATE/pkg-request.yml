@@ -7,7 +7,7 @@ body:
     attributes:
       value: >
         #### Don't request an update of a package,
-        [We have a script for that](https://alpha.de.repo.voidlinux.org/void-updates/void-updates.txt).
+        [We have a script for that](https://repo-default.voidlinux.org/void-updates/void-updates.txt).
         However, a quality pull request may help.
   - id: name
     type: input
@@ -36,9 +36,9 @@ body:
   - id: quality
     type: dropdown
     attributes:
-      label: Does the requested package meet the quality requirements?
+      label: Does the requested package meet the package requirements?
       description: |
-        See [Manual.md](https://github.com/void-linux/void-packages/blob/master/Manual.md#quality_requirements) for details
+        See [CONTRIBUTING.md](https://github.com/void-linux/void-packages/blob/master/CONTRIBUTING.md#package-requirements) for details
       multiple: true
       options:
         - System
@@ -51,7 +51,7 @@ body:
     attributes:
       label: Is the requested package released?
       description: |
-        See [Manual.md](https://github.com/void-linux/void-packages/blob/master/Manual.md#quality_requirements) for details
+        See [CONTRIBUTING.md](https://github.com/void-linux/void-packages/blob/master/CONTRIBUTING.md#package-requirements) for details
       options:
         - "Yes"
         - "No"

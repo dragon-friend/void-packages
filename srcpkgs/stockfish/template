@@ -1,9 +1,9 @@
 # Template file for 'stockfish'
 pkgname=stockfish
-version=15
+version=17
 revision=1
-_net_file=nn-6877cd24400e.nnue
-wrksrc="Stockfish-sf_${version}"
+_net_file_big=nn-1111cefa1111.nnue
+_net_file_small=nn-37f18f62d772.nnue
 build_wrksrc=src
 build_style=gnu-makefile
 make_build_target=build
@@ -14,10 +14,12 @@ maintainer="shtayerc <david.murko@mailbox.org>"
 license="GPL-3.0-or-later"
 homepage="http://stockfishchess.org/"
 distfiles="https://github.com/official-stockfish/Stockfish/archive/sf_${version}.tar.gz
- https://tests.stockfishchess.org/api/nn/${_net_file}"
-checksum="0553fe53ea57ce6641048049d1a17d4807db67eecd3531a3749401362a27c983
- 6877cd24400e01b19ff12ae3068ae242152802bdd330e66f7b6703865251d6e3"
-skip_extraction="${_net_file}"
+ https://tests.stockfishchess.org/api/nn/${_net_file_big}
+ https://tests.stockfishchess.org/api/nn/${_net_file_small}"
+checksum="8f9b52285c3348c065b7cb58410626df16d7416a2e60a3b04f3ec7c038e67ad1
+ 1111cefa11116b77161bd4b14dab4c50f26e5920c756f4861592be3dcd6de174
+ 37f18f62d772f3107e1d6aaca3898c130c3c86f2ab63e6555fbbca20635a899d"
+skip_extraction="${_net_file_big} ${_net_file_small}"
 
 LDFLAGS+="-lpthread -Wl,-z,stack-size=2097152"
 
@@ -35,13 +37,9 @@ case $XBPS_TARGET_MACHINE in
 	*) broken="not supported" ;;
 esac
 
-if [ "$XBPS_TARGET_NO_ATOMIC8" ]; then
-	makedepends+=" libatomic-devel"
-	LDFLAGS+=" -latomic"
-fi
-
 post_extract() {
-	cp $XBPS_SRCDISTDIR/${pkgname}-${version}/${_net_file} ./src
+	cp $XBPS_SRCDISTDIR/${pkgname}-${version}/${_net_file_big} ./src
+	cp $XBPS_SRCDISTDIR/${pkgname}-${version}/${_net_file_small} ./src
 }
 
 do_install() {

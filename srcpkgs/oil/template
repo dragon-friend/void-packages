@@ -1,17 +1,17 @@
 # Template file for 'oil'
 pkgname=oil
-version=0.11.0
+version=0.22.0
 revision=1
 build_style=configure
-configure_args="--prefix=/usr $(vopt_with readline)"
+configure_args="--prefix=/usr"
 hostmakedepends="$(vopt_if readline readline-devel)"
 makedepends="$hostmakedepends"
 short_desc="Oil, a new unix shell"
 maintainer="MarcoAPC <marcoaureliopc@gmail.com>"
 license="Apache-2.0"
 homepage="https://www.oilshell.org"
-distfiles="${homepage}/download/${pkgname}-${version}.tar.xz"
-checksum=e5e00ae776852c41233efc0a310219968523485680714d2dcec500af63d00208
+distfiles="https://www.oilshell.org/download/oil-${version}.tar.xz"
+checksum=452e7fd428b686aa752cfeb9be2b94f9fcf7ba9ab22e0ae570a87cdcf782242e
 register_shell="/usr/bin/osh /usr/bin/oil"
 nocross="Build systems gets confused with host and cross toolchains/headers"
 nostrip=yes

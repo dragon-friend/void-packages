@@ -1,19 +1,17 @@
 # Template file for 'python3-setuptools_scm'
 pkgname=python3-setuptools_scm
-version=7.0.2
+version=8.1.0
 revision=1
-wrksrc="${pkgname#python3-}-${version}"
-build_style=python3-module
-hostmakedepends="python3-setuptools python3-packaging"
-depends="python3-setuptools python3-tomli python3-packaging python3-typing_extensions"
+build_style=python3-pep517
+hostmakedepends="python3-setuptools python3-wheel"
+depends="python3-setuptools python3-packaging python3-typing_extensions"
+checkdepends="git python3-pip python3-pytest $depends"
 short_desc="Manage Python package versions with SCM tags"
 maintainer="Andrew J. Hesford <ajh@sideband.org>"
 license="MIT"
 homepage="https://github.com/pypa/setuptools_scm"
 distfiles="${PYPI_SITE}/s/setuptools_scm/setuptools_scm-${version}.tar.gz"
-checksum=53afbaa882f43e5ec8e14f2d93b9c268dc62eb3f6cc8b2790f8cb97903e53c02
-# Tests seem to fail unless package is installed
-make_check=no
+checksum=42dea1b65771cba93b7a515d65a65d8246e560768a66b9106a592c8e7f26c8a7
 
 post_install() {
 	vlicense LICENSE

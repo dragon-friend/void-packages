@@ -1,23 +1,26 @@
 # Template file for 'watchexec'
 pkgname=watchexec
-version=1.20.0
+version=2.1.2
 revision=1
-wrksrc="${pkgname}-cli-v${version}"
-build_wrksrc="crates/cli"
 build_style=cargo
+make_install_args="--path crates/cli"
+make_check_args="-- --skip scopes"  # test fails in chroot
 short_desc="Executes commands in response to file modifications"
 maintainer="cinerea0 <cinerea0@protonmail.com>"
 license="Apache-2.0"
 homepage="https://github.com/watchexec/watchexec"
-distfiles="https://github.com/watchexec/watchexec/archive/refs/tags/cli-v${version}.tar.gz"
-checksum=69c551090692a04943e7ded2d7f997f8777aa099c674b096a31d94983d02dbf7
+changelog="https://github.com/watchexec/watchexec/releases"
+distfiles="https://github.com/watchexec/watchexec/archive/refs/tags/v${version}.tar.gz"
+checksum=500b886038ccd553559fe19914e1a502728cfeb8ee9d81f3db448b05e5a890ec
 
 if [ "$XBPS_TARGET_NO_ATOMIC8" ]; then
-	makedepends+=" libatomic-devel"
 	XBPS_CROSS_RUSTFLAGS+=" -latomic"
 fi
 
 post_install() {
-	vman ${wrksrc}/doc/watchexec.1
-	vcompletion ${wrksrc}/completions/zsh zsh
+	for shell in bash fish zsh; do
+		vcompletion completions/${shell} ${shell}
+	done
+
+	vman doc/watchexec.1
 }

@@ -1,9 +1,8 @@
 # Template file for 'pd'
 pkgname=pd
-version=0.52.2
+version=0.55.1
 revision=1
 _ver=${version%.*}-${version##*.}
-wrksrc="$pkgname-$_ver"
 build_style=gnu-configure
 configure_args="--enable-alsa --enable-jack --disable-portaudio --enable-fftw"
 hostmakedepends="automake libtool pkg-config"
@@ -14,7 +13,7 @@ maintainer="Andrea Brancaleoni <abc@pompel.me>"
 license="BSD-3-Clause"
 homepage="https://puredata.info"
 distfiles="http://msp.ucsd.edu/Software/pd-$_ver.src.tar.gz"
-checksum=e95df5864e7cf5043687b570fc3ae92ba8c5874d3acd8dee79278b6d9fd3cc11
+checksum=e8d37345ee4a02092bf2e1f905d86c3209a797a960b309e6200ec473d4fbabd9
 
 pre_configure() {
 	./autogen.sh

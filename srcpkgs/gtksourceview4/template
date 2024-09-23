@@ -1,22 +1,22 @@
 # Template file for 'gtksourceview4'
 pkgname=gtksourceview4
-version=4.8.2
+version=4.8.4
 revision=1
-wrksrc="gtksourceview-${version}"
 build_style=meson
 build_helper="gir"
 configure_args="-Dglade_catalog=true $(vopt_bool gir gir)
  $(vopt_bool gir vapi) $(vopt_bool gtk_doc gtk_doc)"
 hostmakedepends="gtk+3-devel glib-devel itstool libxslt pkg-config
- $(vopt_if gir vala) $(vopt_if gtk_doc gtk-doc)"
+ $(vopt_if gir vala) $(vopt_if gtk_doc gtk-doc) gettext"
 makedepends="glade3-devel gtk+3-devel libglib-devel libxml2-devel
  $(vopt_if gir vala)"
 short_desc="Text widget that extends GTK+ GtkTextView widget"
 maintainer="Enno Boland <gottox@voidlinux.org>"
 license="GPL-2.0-or-later"
 homepage="https://wiki.gnome.org/Projects/GtkSourceView"
+changelog="https://gitlab.gnome.org/GNOME/gtksourceview/-/raw/gtksourceview-4-8/NEWS"
 distfiles="${GNOME_SITE}/gtksourceview/${version%.*}/gtksourceview-${version}.tar.xz"
-checksum=842de7e5cb52000fd810e4be39cd9fe29ffa87477f15da85c18f7b82d45637cc
+checksum=7ec9d18fb283d1f84a3a3eff3b7a72b09a10c9c006597b3fbabbb5958420a87d
 
 # Package build options
 build_options="gir gtk_doc"

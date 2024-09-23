@@ -1,7 +1,7 @@
 # Template file for 'libcap-ng'
 pkgname=libcap-ng
-version=0.8.2
-revision=2
+version=0.8.5
+revision=1
 build_style=gnu-configure
 configure_args="--without-python --without-python3"
 short_desc="Alternate POSIX capabilities library"
@@ -9,13 +9,13 @@ maintainer="Orphaned <orphan@voidlinux.org>"
 license="GPL-2.0-or-later, LGPL-2.1-or-later"
 homepage="http://people.redhat.com/sgrubb/libcap-ng/"
 distfiles="http://people.redhat.com/sgrubb/$pkgname/$pkgname-$version.tar.gz"
-checksum=52c083b77c2b0d8449dee141f9c3eba76e6d4c5ad44ef05df25891126cb85ae9
+checksum=3ba5294d1cbdfa98afaacfbc00b6af9ed2b83e8a21817185dfd844cc8c7ac6ff
 
 subpackages="libcap-ng-devel libcap-ng-progs"
 
 if [ -z "$CROSS_BUILD" ]; then
 	subpackages+=" libcap-ng-python libcap-ng-python3"
-	hostmakedepends="python3-devel swig"
+	hostmakedepends="python3-devel swig python3-setuptools"
 	configure_args+=" --without-python --with-python3"
 fi
 

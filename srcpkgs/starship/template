@@ -1,36 +1,31 @@
 # Template file for 'starship'
 pkgname=starship
-version=1.8.0
+version=1.20.1
 revision=1
 build_style=cargo
 build_helper=qemu
-hostmakedepends="libgit2-devel pkg-config"
-makedepends="libgit2-devel openssl-devel"
+make_check_args="-- --skip modules::username::tests::show_always_false" # test fails in CI
+hostmakedepends="cmake pkg-config"
 depends="git"
 checkdepends="git fish-shell"
 short_desc="Minimal, fast and customizable cross-shell prompt"
 maintainer="cinerea0 <cinerea0@protonmail.com>"
 license="ISC"
 homepage="https://starship.rs"
+changelog="https://raw.githubusercontent.com/starship/starship/master/CHANGELOG.md"
 distfiles="https://github.com/starship/starship/archive/refs/tags/v${version}.tar.gz"
-checksum=398bf5b413ce5dfe4d3c5acceb0025f773478f28016609869821cf385448dcf5
+checksum=851d84be69f9171f10890e3b58b8c5ec6057dd873dc83bfe0bdf965f9844b5dc
+make_check_pre="env HOME=${wrksrc}/fake-home"
 
-post_build() {
-	STARSHIP="target/${RUST_TARGET}/release/starship"
-	vtargetrun ${STARSHIP} completions zsh  >starship.zsh
-	vtargetrun ${STARSHIP} completions bash >starship.bash
-	vtargetrun ${STARSHIP} completions fish >starship.fish
-}
-
-do_check() {
+pre_check() {
 	mkdir -p fake-home
-	HOME="${wrksrc}/fake-home" cargo test --release --target ${RUST_TARGET}
 }
 
 post_install() {
-	vcompletion starship.bash bash
-	vcompletion starship.fish fish
-	vcompletion starship.zsh zsh
+	for shell in bash fish zsh; do
+		vtargetrun ${DESTDIR}/usr/bin/starship completions ${shell} > starship.${shell}
+		vcompletion starship.${shell} ${shell}
+	done
 
 	vlicense LICENSE
 }

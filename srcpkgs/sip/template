@@ -1,29 +1,21 @@
 # Template file for 'sip'
 pkgname=sip
-version=6.3.1
+version=6.8.6
 revision=1
-build_style=python3-module
-hostmakedepends="python3-devel python3-setuptools python3-packaging python3-toml"
-makedepends="python3-devel"
-depends="python3-setuptools python3-packaging python3-toml"
+build_style=python3-pep517
+hostmakedepends="python3-setuptools_scm python3-packaging"
+depends="python3-setuptools python3-packaging"
 short_desc="SIP - Python 3 bindings generator for C/C++ libraries"
 maintainer="Đoàn Trần Công Danh <congdanhqx@gmail.com>"
-license="GPL-2.0-only, GPL-3.0-only, custom:SIP"
+# vendored ply is BSD-3-Clause
+license="BSD-2-Clause, BSD-3-Clause"
 homepage="https://riverbankcomputing.com/software/sip/intro"
 distfiles="${PYPI_SITE}/s/sip/sip-${version}.tar.gz"
-checksum=2f9cd6ce0e19226d53d62ad6ba81a62f624626f14924724eab2a23390d4dc684
+checksum=7fc959e48e6ec5d5af8bd026f69f5e24d08b3cb8abb342176f5ab8030cc07d7a
 lib32disabled=yes
 replaces="sip5<=${version}_${revision}"
 provides="sip5-${version}_${revision}"
 
 post_install() {
-	sed -n '1,/SUCH DAMAGE/p' sipbuild/project.py >NOTICE
-	vlicense NOTICE
 	vlicense LICENSE
-}
-
-sip5_package() {
-	short_desc+=" - transition"
-	build_style=meta
-	depends="sip>=${version}_${revision}"
 }

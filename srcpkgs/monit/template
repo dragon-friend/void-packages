@@ -1,6 +1,6 @@
 # Template file for 'monit'
 pkgname=monit
-version=5.32.0
+version=5.34.0
 revision=1
 build_style=gnu-configure
 configure_args="
@@ -15,8 +15,12 @@ maintainer="Duncaen <duncaen@voidlinux.org>"
 license="AGPL-3.0-only"
 homepage="https://mmonit.com/monit/"
 changelog="https://mmonit.com/monit/changes/"
-distfiles="https://mmonit.com/monit/dist/${pkgname}-${version}.tar.gz"
-checksum=1077052d4c4e848ac47d14f9b37754d46419aecbe8c9a07e1f869c914faf3216
+distfiles="https://mmonit.com/monit/dist/monit-${version}.tar.gz"
+checksum=37f514cd8973bbce104cb8517ff3fc504052a083703eee0d0e873db26b919820
+
+if [ "$XBPS_TARGET_LIBC" = "glibc" ]; then
+	makedepends+=" libxcrypt-devel"
+fi
 
 pre_configure() {
 	./bootstrap

@@ -1,9 +1,9 @@
 # Template file for 'libbytesize'
 pkgname=libbytesize
-version=2.6
-revision=2
+version=2.10
+revision=1
 build_style=gnu-configure
-hostmakedepends="gettext python3"
+hostmakedepends="pkg-config gettext python3"
 makedepends="mpfr-devel pcre2-devel"
 checkdepends="python3-six"
 short_desc="Library for operations with sizes in bytes"
@@ -12,15 +12,11 @@ license="LGPL-2.1-or-later"
 homepage="https://github.com/storaged-project/libbytesize"
 changelog="https://raw.githubusercontent.com/storaged-project/libbytesize/master/NEWS.rst"
 distfiles="https://github.com/storaged-project/libbytesize/releases/download/${version}/libbytesize-${version}.tar.gz"
-checksum=efaa2b35b2bb3b52bf7b4ff5d0ed2c5c61360a5196053808d615dd0aa2cf0741
-# checks fails in libbytesize_unittest.sh
-make_check=no
+checksum=1d1ce3be8ac59fd59511d0794c7327d5cf33f1e83496837b17e19ac49400cad1
 
 pre_check() {
-	# Disable test that depends on unpackaged pocketlint
-	sed -i 's|canary_tests.sh$||g' tests/Makefile
-	# Default locale doesn't work
-	sed -i 's|DEFAULT_LOCALE =.*|DEFAULT_LOCALE = "C"|g' tests/libbytesize_unittest.py
+	# Requires python3-pocketlint, which is not packaged yet.
+	vsed -e 's/canary_tests.sh$//g' -i tests/Makefile
 }
 
 libbytesize-devel_package() {
@@ -37,6 +33,9 @@ libbytesize-python3_package() {
 	depends="python3-six ${sourcepkg}>=${version}_${revision}"
 	short_desc+=" - Python3 bindings"
 	pkg_install() {
-		vmove usr/lib/python3*
+		vmove "usr/lib/python3*"
+		# Requires the Python module.
+		vmove usr/bin/bscalc
+		vmove usr/share/man/man1/bscalc.1
 	}
 }

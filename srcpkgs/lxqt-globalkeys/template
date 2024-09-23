@@ -1,16 +1,16 @@
 # Template file for 'lxqt-globalkeys'
 pkgname=lxqt-globalkeys
-version=1.1.0
+version=2.0.0
 revision=1
 build_style=cmake
-hostmakedepends="lxqt-build-tools qt5-qmake qt5-host-tools perl"
+hostmakedepends="lxqt-build-tools qt6-base qt6-tools perl"
 makedepends="liblxqt-devel"
 short_desc="LXQt daemon and library for global keyboard shortcuts registration"
 maintainer="Helmut Pozimski <helmut@pozimski.eu>"
 license="LGPL-2.1-or-later"
 homepage="https://lxqt-project.org"
 distfiles="https://github.com/lxqt/lxqt-globalkeys/archive/${version}.tar.gz"
-checksum=ce0cbdbfbddef4ea9b2018b61fb6fc03caeea57fc31bc6f4bb54a04619edb2aa
+checksum=9fdb260d42eeb08338a6ba0bea5ce426539231944f73ec1954299ad8b5b114a7
 replaces="lxqt-common>=0"
 
 lxqt-globalkeys-devel_package() {

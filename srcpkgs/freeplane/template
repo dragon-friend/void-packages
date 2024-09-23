@@ -2,7 +2,6 @@
 pkgname=freeplane
 version=1.9.14
 revision=1
-wrksrc="freeplane-release-${version}"
 hostmakedepends="apache-ant openjdk11 unzip gradle"
 depends="openjdk11-jre"
 short_desc="Application for Mind Mapping, Knowledge Management, Project Management"
@@ -23,7 +22,7 @@ esac
 
 do_build() {
 	. /etc/profile.d/apache-ant.sh
-	. /etc/profile.d/openjdk.sh
+	. /etc/profile.d/jdk.sh
 
 	gradle format_translation binZip -x test
 }

@@ -1,8 +1,7 @@
 # Template file for 'gst1-python3'
 pkgname=gst1-python3
-version=1.20.1
+version=1.24.6
 revision=1
-wrksrc="gst-python-${version}"
 build_style=meson
 hostmakedepends="pkg-config python3"
 makedepends="libglib-devel python3-devel python3-gobject-devel gst-plugins-base1-devel"
@@ -11,5 +10,7 @@ short_desc="Python3 bindings for GStreamer 1.x"
 maintainer="Orphaned <orphan@voidlinux.org>"
 license="LGPL-2.1-or-later"
 homepage="https://gstreamer.freedesktop.org"
-distfiles="${homepage}/src/gst-python/gst-python-${version}.tar.xz"
-checksum=ba6cd59faa3db3981d8c6982351c239d823c0b8e80b1acf58d2997b050289422
+changelog="https://gstreamer.freedesktop.org/releases/${version%.*}/#${version}"
+distfiles="https://gstreamer.freedesktop.org/src/gst-python/gst-python-${version}.tar.xz"
+checksum=692e88820e097b30e5f92d37d0955c709a0a17b27f874a1907405244825bd700
+make_check=no # Upstream didn't adjust checks to match their API changes

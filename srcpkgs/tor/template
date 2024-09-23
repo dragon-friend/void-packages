@@ -1,20 +1,25 @@
 # Template file for 'tor'
 pkgname=tor
-version=0.4.7.8
+version=0.4.8.11
 revision=1
 build_style=gnu-configure
-configure_args="--enable-zstd"
+configure_args="--enable-gpl"
 hostmakedepends="pkg-config"
 makedepends="libcap-devel libevent-devel libscrypt-devel libseccomp-devel liblzma-devel zlib-devel libzstd-devel"
-depends="ca-certificates torsocks"
+depends="ca-certificates"
 checkdepends="coccinelle python3"
 short_desc="Anonymizing overlay network"
 maintainer="Daniel Eyßer <daniel.eysser@gmail.com>"
-license="BSD-3-Clause"
+license="BSD-3-Clause, GPL-3.0-only"
 homepage="https://www.torproject.org/"
 changelog="https://gitlab.torproject.org/tpo/core/tor/-/raw/main/ChangeLog"
 distfiles="https://dist.torproject.org/tor-${version}.tar.gz"
-checksum=9e9a5c67ad2acdd5f0f8be14ed591fed076b1708abf8344066990a0fa66fe195
+checksum=8f2bdf90e63380781235aa7d604e159570f283ecee674670873d8bb7052c8e07
+
+case "${XBPS_TARGET_MACHINE}" in
+	# Tests just don't work here
+	x86_64-musl) make_check=no ;;
+esac
 
 conf_files="/etc/tor/torrc"
 system_accounts="tor"

@@ -1,12 +1,12 @@
 # Template file for 'getdns'
 pkgname=getdns
 version=1.7.0
-revision=1
+revision=2
 build_style=cmake
-makedepends="libev-devel libidn-devel libuv-devel unbound-devel
- check-devel libidn2-devel"
+makedepends="libev-devel libidn2-devel libuv-devel unbound-devel
+ check-devel"
 short_desc="Modern asynchronous DNS API"
-maintainer="Frank Steinborn <steinex@nognu.de>"
+maintainer="Orphaned <orphan@voidlinux.org>"
 license="BSD-3-Clause"
 homepage="https://getdnsapi.net"
 distfiles="https://getdnsapi.net/dist/getdns-${version}.tar.gz"

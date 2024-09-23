@@ -1,16 +1,16 @@
 # Template file for 'ncdu'
 pkgname=ncdu
-version=1.17
+version=1.20
 revision=1
 build_style=gnu-configure
 makedepends="ncurses-devel"
 short_desc="NCurses Disk Usage utility"
-maintainer="teldra <teldra@rotce.de>"
+maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="MIT"
 homepage="https://dev.yorhel.nl/ncdu"
 changelog="https://dev.yorhel.nl/ncdu/changes"
-distfiles="https://dev.yorhel.nl/download/${pkgname}-${version}.tar.gz"
-checksum=810745a8ed1ab3788c87d3aea4cc1a14edf6ee226f764bcc383e024ba56adbf1
+distfiles="https://dev.yorhel.nl/download/ncdu-${version}.tar.gz"
+checksum=5fe2bb841abe72374bb242dbb93293c4ae053078432d896a7481b2ff10be9572
 
 post_install() {
 	vlicense COPYING

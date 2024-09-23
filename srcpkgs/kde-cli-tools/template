@@ -1,21 +1,22 @@
 # Template file for 'kde-cli-tools'
 pkgname=kde-cli-tools
-version=5.24.5
+version=6.1.5
 revision=1
 build_style=cmake
-configure_args="-DBUILD_TESTING=OFF"
-hostmakedepends="extra-cmake-modules gettext pkg-config
- kpackage kdoctools kcoreaddons python3 qt5-host-tools qt5-qmake"
-makedepends="kactivities5-devel kcmutils-devel kdelibs4support-devel
- kdesu-devel plasma-workspace-devel"
+configure_args="-DBUILD_TESTING=OFF -DKF6_HOST_TOOLING=/usr/lib/cmake
+ -DKDE_INSTALL_QTPLUGINDIR=lib/qt6/plugins"
+hostmakedepends="extra-cmake-modules qt6-base qt6-tools gettext
+ kf6-kconfig kf6-kcmutils"
+makedepends="plasma-activities-devel kf6-kcmutils-devel kf6-kdesu-devel
+ plasma-workspace-devel kf6-ki18n-devel qt6-base-private-devel"
 depends="xdg-utils"
 short_desc="KDE CLI tools"
 maintainer="John <me@johnnynator.dev>"
 license="LGPL-2.1-or-later, GPL-2.0-or-later"
 homepage="https://invent.kde.org/plasma/kde-cli-tools"
 distfiles="${KDE_SITE}/plasma/${version}/${pkgname}-${version}.tar.xz"
-checksum=e7f0dd3469b7b3152e72514f1f6ce544514067011ebd0137cb0957d37ad6d329
+checksum=c0f336062af80080454ca39a85ab60bca1ec7a854e84c09d492830b110790313
 
 post_install() {
-	ln -sf ../libexec/kf5/kdesu ${DESTDIR}/usr/bin
+	ln -sf ../libexec/kf6/kdesu ${DESTDIR}/usr/bin
 }

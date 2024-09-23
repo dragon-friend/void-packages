@@ -1,15 +1,23 @@
 # Template file for 'topgrade'
 pkgname=topgrade
-version=9.0.1
+version=15.0.0
 revision=1
 build_style=cargo
+build_helper=qemu
 short_desc="Meta upgrade tool for pip, flatpak, your distro and everything else"
-maintainer="jcgruenhage <jan.christian@gruenhage.xyz>"
+maintainer="tranzystorekk <tranzystorek.io@protonmail.com>"
 license="GPL-3.0-only"
-homepage="https://github.com/r-darwish/topgrade"
-distfiles="https://github.com/r-darwish/topgrade/archive/v${version}.tar.gz"
-checksum=70a1cf2c6a4de41e4c708409842968f3cf05dd5f238efac7ca0f1c9064be670a
+homepage="https://github.com/topgrade-rs/topgrade"
+distfiles="https://github.com/topgrade-rs/topgrade/archive/refs/tags/v${version}.tar.gz"
+checksum=53c6521041a6ffddf1ccb13f404f131919a2ef48deb3974fc71dc3be08db6cd0
 
 post_install() {
+	local topgrade="${DESTDIR}/usr/bin/topgrade"
+	for shell in bash fish zsh; do
+		vtargetrun ${topgrade} --gen-completion ${shell} > topgrade.${shell}
+		vcompletion topgrade.${shell} ${shell}
+	done
+
+	vtargetrun ${topgrade} --gen-manpage > topgrade.8
 	vman topgrade.8
 }

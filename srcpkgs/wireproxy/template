@@ -1,16 +1,17 @@
 # Template file for 'wireproxy'
 pkgname=wireproxy
-version=1.0.1
-revision=1
+version=1.0.9
+revision=2
 build_style=go
-go_import_path="github.com/octeep/wireproxy"
+go_import_path="github.com/pufferffish/wireproxy"
 go_package="${go_import_path}/cmd/wireproxy"
-short_desc="Wireguard client that exposes itself as a socks5 proxy"
-maintainer="Wind Wong <octeep@pm.me>"
+go_ldflags="-X 'main.version=${version}'"
+short_desc="Wireguard client that exposes itself as a SOCKS5 proxy"
+maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="ISC"
-homepage="https://github.com/octeep/wireproxy"
-distfiles="https://github.com/octeep/wireproxy/archive/v${version}.tar.gz"
-checksum=e21eac22ef1b12dc2d7b3e5b58dcff183af9c1547be3e55a7e6c71394f053e1e
+homepage="https://github.com/pufferffish"
+distfiles="https://github.com/pufferffish/wireproxy/archive/refs/tags/v${version}.tar.gz"
+checksum=6359d060740ad878f0c26217d44968a58a069302447e15774cbf747b8d1404d2
 make_dirs="
  /etc/wireproxy 0750 root _wireproxy
  /var/lib/wireproxy 0700 _wireproxy _wireproxy"

@@ -1,26 +1,26 @@
 # Template file for 'tcl'
 pkgname=tcl
-version=8.6.12
+version=8.6.14
 revision=1
-wrksrc="tcl${version}"
 build_wrksrc=unix
 build_style=gnu-configure
 configure_args="--enable-threads --without-tzdata --enable-man-symlinks
- --disable-static --disable-rpath --with-system-sqlite
+ --disable-static --disable-rpath
  tcl_cv_strstr_unbroken=ok
  tcl_cv_strtoul_unbroken=ok"
-makedepends="zlib-devel sqlite-devel"
+makedepends="zlib-devel"
 short_desc="TCL scripting language"
 maintainer="Orphaned <orphan@voidlinux.org>"
 license="TCL"
 homepage="http://www.tcl.tk"
-distfiles="${SOURCEFORGE_SITE}/${pkgname}/${pkgname}${version}-src.tar.gz"
-checksum=26c995dd0f167e48b11961d891ee555f680c175f7173ff8cb829f4ebcde4c1a6
+distfiles="${SOURCEFORGE_SITE}/tcl/tcl${version}-src.tar.gz"
+checksum=5880225babf7954c58d4fb0f5cf6279104ce1cd6aa9b71e9a6322540e1c4de66
 
 shlib_provides="libtcl${version%.*}.so"
 
 post_extract() {
-	vsed -i pkgs/sqlite*/Makefile.in -e 's/-DSQLITE_API=MODULE_SCOPE//g'
+	rm -rf pkgs/sqlite*
+	rm -rf unix/pkgs/sqlite*
 }
 
 do_check() {

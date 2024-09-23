@@ -1,18 +1,19 @@
 # Template file for 'libpng'
 pkgname=libpng
-version=1.6.37
+version=1.6.44
 revision=1
 build_style=gnu-configure
 makedepends="zlib-devel"
 short_desc="Library for manipulating PNG images"
-maintainer="Orphaned <orphan@voidlinux.org>"
+maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="Libpng"
 homepage="http://www.libpng.org/pub/png/libpng.html"
+changelog="https://github.com/pnggroup/libpng/blob/master/CHANGES"
 distfiles="${SOURCEFORGE_SITE}/libpng/libpng-${version}.tar.xz"
-checksum=505e70834d35383537b6491e7ae8641f1a4bed1876dbfe361201fc80868d88ca
+checksum=60c4da1d5b7f0aa8d158da48e8f8afa9773c1c8baa5d21974df61f1886b8ce8e
 
 case "$XBPS_TARGET_MACHINE" in
-	arm*|aarch64*) configure_args="--enable-arm-neon=no";;
+	arm*) configure_args="--enable-arm-neon=no";;
 esac
 
 post_install() {

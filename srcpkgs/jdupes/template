@@ -1,26 +1,23 @@
 # Template file for 'jdupes'
 pkgname=jdupes
-version=1.20.2
+version=1.28.0
 revision=1
 build_style=gnu-makefile
-make_build_args="ENABLE_BTRFS=1"
+make_build_args="ENABLE_BTRFS=1 ENABLE_DEDUPE=1"
+make_use_env=yes
+makedepends="libjodycode-devel"
 short_desc="Powerful duplicate file finder and an enhanced fork of fdupes"
-maintainer="Orphaned <orphan@voidlinux.org>"
+maintainer="cinerea0 <cinerea0@protonmail.com>"
 license="MIT"
-homepage="https://github.com/jbruchon/jdupes"
-changelog="https://raw.githubusercontent.com/jbruchon/jdupes/master/CHANGES"
-distfiles="https://github.com/jbruchon/jdupes/archive/v${version}.tar.gz"
-checksum=d079d22dc77e1d181abcb8a59216520633a8712d197d007a9a9fb64c72610824
-
-pre_build() {
-	sed -i 's/^CFLAGS +=/override CFLAGS +=/g' Makefile
-	sed -i 's/^LDFLAGS =/override LDFLAGS +=/g' Makefile
-}
+homepage="https://www.jdupes.com/"
+changelog="https://codeberg.org/jbruchon/jdupes/raw/branch/master/CHANGES.txt"
+distfiles="https://codeberg.org/jbruchon/jdupes/archive/v${version}.tar.gz"
+checksum=a8f21c04fff5e3ff0a92e8ac76114b2195ed43dc32b84bf343f5256e7ba9cb04
 
 post_install() {
-	vlicense LICENSE
+	vlicense LICENSE.txt
 }
 
 do_check() {
-	./jdupes -V|grep fsdedup
+	./jdupes -v | grep 'Compile-time feature flags:.*dedup'
 }

@@ -1,10 +1,9 @@
 # Template file for 'python3-aiofiles'
 pkgname=python3-aiofiles
-version=0.8.0
+version=24.1.0
 revision=1
-wrksrc="${pkgname#*-}-${version}"
 build_style=python3-pep517
-hostmakedepends="python3-poetry-core"
+hostmakedepends="hatchling"
 depends="python3"
 checkdepends="python3-pytest-asyncio"
 short_desc="File support for asyncio in Python"
@@ -13,8 +12,4 @@ license="Apache-2.0"
 homepage="https://github.com/Tinche/aiofiles"
 changelog="https://raw.githubusercontent.com/Tinche/aiofiles/master/README.rst"
 distfiles="${homepage}/archive/v${version}.tar.gz"
-checksum=1ee866ce57b47e2f5ae2c06c0372458a6eb08131a9b1d7216a234fa0d516d638
-
-do_check() {
-	PYTHONPATH=src python3 -m pytest
-}
+checksum=7214ba00010ddb878cc705678da06364cefa241541394f3093a0ef89536a65d0

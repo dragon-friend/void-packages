@@ -1,17 +1,18 @@
 # Template file for 'libedit'
 pkgname=libedit
-version=20210910.3.1
+version=20240517.3.1
 revision=1
-_distver="${version%%.*}-${version#*.}"
-wrksrc="${pkgname}-${_distver}"
 build_style=gnu-configure
+# only check if man support nroff format
+# all of our man supports nroff
+configure_args="ac_cv_path_NROFF=/bin/true"
 makedepends="ncurses-devel"
 short_desc="Port of the NetBSD Command Line Editor Library"
 maintainer="Orphaned <orphan@voidlinux.org>"
 license="BSD-3-Clause"
-homepage="http://www.thrysoee.dk/editline/"
-distfiles="http://www.thrysoee.dk/editline/libedit-${_distver}.tar.gz"
-checksum=6792a6a992050762edcca28ff3318cdb7de37dccf7bc30db59fcd7017eed13c5
+homepage="https://www.thrysoee.dk/editline/"
+distfiles="https://www.thrysoee.dk/editline/libedit-${version%%.*}-${version#*.}.tar.gz"
+checksum=3a489097bb4115495f3bd85ae782852b7097c556d9500088d74b6fa38dbd12ff
 
 post_install() {
 	vlicense COPYING

@@ -1,24 +1,23 @@
 # Template file for 'skype'
 # This just repackages the rpm package.
 pkgname=skype
-version=8.85.0.409
+version=8.108.0.205
 revision=1
 archs="x86_64"
 create_wrksrc=yes
-hostmakedepends="rpmextract"
 depends="elogind"
 short_desc="Skype for Linux"
 maintainer="mobinmob <mobinmob@disroot.org>"
 license="custom:skype-servicesagreement" # no vlicense
 homepage="https://www.skype.com"
 distfiles="https://repo.skype.com/rpm/stable/skypeforlinux_${version}-1.x86_64.rpm"
-checksum=365b849e05e1d0cf0bf6c3a8e3d34bee3547348c068e2dfb9d10cea6a9a58518
+checksum=be3b714636da765e40b4c814a32988914938e2788b0ad558bfb9b7ce1e67dcef
 repository="nonfree"
 nostrip="yes"
 
 do_install() {
 	# Copy files
-	vcopy "*" /
+	vcopy "*" "."
 	# Move executables to usr/lib and change the launcher script
 	vsed -i "${DESTDIR}/usr/bin/skypeforlinux" -e "s;share/;lib/;g"
 	vmkdir usr/lib/skypeforlinux

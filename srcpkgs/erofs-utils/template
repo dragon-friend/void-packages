@@ -1,23 +1,31 @@
 # Template file for 'erofs-utils'
 pkgname=erofs-utils
-version=1.3
+version=1.8.1
 revision=1
 build_style=gnu-configure
+configure_args="
+ --enable-fuse
+ --enable-lzma"
 hostmakedepends="automake libtool pkg-config"
-makedepends="liblz4-devel libuuid-devel"
+makedepends="liblz4-devel libuuid-devel liblzma-devel libzstd-devel zlib-devel
+ fuse-devel"
 short_desc="User-space tools for EROFS filesystem"
 maintainer="Duncaen <duncaen@voidlinux.org>"
 license="GPL-2.0-or-later"
 homepage="https://git.kernel.org/pub/scm/linux/kernel/git/xiang/erofs-utils.git/about/"
+changelog="https://git.kernel.org/pub/scm/linux/kernel/git/xiang/erofs-utils.git/plain/ChangeLog"
 distfiles="https://git.kernel.org/pub/scm/linux/kernel/git/xiang/erofs-utils.git/snapshot/erofs-utils-${version}.tar.gz"
-checksum=132635740039bbe76d743aea72378bfae30dbf034e123929f5d794198d4c0b12
+checksum=5dbf7b492f7682462b97a77121d43ca7609cd90e65f8c96931aefc820a6f0da3
 
 pre_configure() {
 	autoreconf -fi
 }
 
-post_install() {
-	# erofsfuse is experimental and not currently build/enabled but the man
-	# page is still installed, remove it for now.
-	rm -f "${DESTDIR}/usr/share/man/man1/erofsfuse.1"
+fuse-erofs_package() {
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - development files"
+	pkg_install() {
+		vmove usr/bin/erofsfuse
+		vmove usr/share/man/man1/erofsfuse.1
+	}
 }

@@ -1,16 +1,16 @@
 # Template file for 'spdx-licenses-list'
-
 # common/travis/license.lst should be updated in sync with this package
+# run common/scripts/check-custom-licenses after updating to find
+# license fields in packages that can have 'custom:' removed
 pkgname=spdx-licenses-list
-version=3.17
+version=3.24.0
 revision=1
-wrksrc="license-list-data-${version}"
 short_desc="SPDX License List"
 maintainer="mobinmob <mobinmob@disroot.org>"
 license="CC-BY-3.0"
 homepage="https://spdx.org"
 distfiles="https://github.com/spdx/license-list-data/archive/v${version}.tar.gz"
-checksum=387b518f145a95079438b4ec0fc8a42e38fb76f8c4a05c0f169a6b156be27788
+checksum=dcf8781b52ec224aaf67e715ada5a2a002dfaaa8a702a98b4d0945da20081c40
 
 do_install() {
 	vmkdir usr/share/spdx

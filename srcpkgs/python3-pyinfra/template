@@ -1,24 +1,20 @@
 # Template file for 'python3-pyinfra'
 pkgname=python3-pyinfra
-version=2.1
+version=3.1
 revision=1
-wrksrc="pyinfra-${version}"
-build_style=python3-module
+build_style=python3-pep517
 hostmakedepends="python3-setuptools"
 depends="python3 python3-Jinja2 python3-click python3-colorama python3-dateutil
  python3-distro python3-docopt python3-gevent python3-paramiko python3-pywinrm
- python3-six python3-yaml"
+ python3-six python3-yaml python3-packaging python3-typeguard"
 checkdepends="${depends} python3-pytest python3-mock openssh"
 short_desc="Automate infrastructure super fast at massive scale"
 maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="MIT"
 homepage="https://pyinfra.com/"
+changelog="https://github.com/Fizzadar/pyinfra/blob/HEAD/CHANGELOG.md"
 distfiles="https://github.com/Fizzadar/pyinfra/archive/v${version}.tar.gz"
-checksum=aba617e8b672b3a2f0a3efcbf142a86c5e47a2adfe9b54ceef009ccbfc8221a9
-
-post_extract() {
-	vsed -i -e '/configparser/d' setup.py  # is in Python 3.8
-}
+checksum=b797acbd0c978d69d0e24d18fa1b1cbfdc1ad67691890c12f4784c223aeca1db
 
 post_install() {
 	rm -r ${DESTDIR}/${py3_sitelib}/tests

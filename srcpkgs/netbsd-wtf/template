@@ -1,20 +1,17 @@
 # Template file for 'netbsd-wtf'
 pkgname=netbsd-wtf
-version=20180621
-revision=3
-_commit=b1e5be48e340146f63b174cc14fef892a783168b
+version=20240403
+revision=1
+_commit=4bc29b2a940ef615e6184ef92f4aabd4b8e619fb
 build_style=gnu-makefile
 short_desc="NetBSD's wtf(6) utility"
-maintainer="Orphaned <orphan@voidlinux.org>"
+maintainer="Duncaen <duncaen@voidlinux.org>"
 license="Public Domain"
 homepage="https://www.netbsd.org"
 distfiles="https://github.com/void-linux/netbsd-wtf/archive/$_commit.tar.gz"
-checksum=5da7c6c286673baa8cc0ce2840c16895eef3e884e038a6cb7dedabdd15753de7
-
-wrksrc="$pkgname-$_commit"
-make_build_args="PREFIX=/usr"
+checksum=91977a6a6f71785c471b99c09e0c9dd92ed330887e154235e2fd184bfbb6360b
 
 post_install() {
-	mv ${DESTDIR}/usr/bin/{wtf,$pkgname}
-	mv ${DESTDIR}/usr/share/man/man6/{wtf,$pkgname}.6
+	mv ${DESTDIR}/usr/bin/{wtf,netbsd-wtf}
+	mv ${DESTDIR}/usr/share/man/man6/{wtf,netbsd-wtf}.6
 }

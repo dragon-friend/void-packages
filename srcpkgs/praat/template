@@ -1,6 +1,6 @@
 # Template file for 'praat'
 pkgname=praat
-version=6.2.14
+version=6.4.17
 revision=1
 create_wrksrc=yes
 hostmakedepends="pkg-config"
@@ -10,10 +10,10 @@ checkdepends="cantarell-fonts"
 short_desc="Speech analysis, synthesis, and manipulation"
 maintainer="newbluemoon <blaumolch@mailbox.org>"
 license="GPL-2.0-or-later"
-homepage="http://www.praat.org/"
-changelog="http://www.fon.hum.uva.nl/praat/manual/What_s_new_.html"
+homepage="https://www.fon.hum.uva.nl/praat/"
+changelog="https://www.fon.hum.uva.nl/praat/manual/What_s_new_.html"
 distfiles="https://github.com/praat/praat/archive/v${version}.tar.gz"
-checksum=51f8d8594810fd8a4cda415689eb161a5c740d5c44d52d37e700ebaf2e8bb832
+checksum=3c3d1f5eb5d45a165a7eaa349096ec3c586ada84c685ef915af1cacc0bf7b720
 
 # there are a number of pre-defined Makefiles for certain configurations
 # build options are used to choose which one to use among a selected few
@@ -47,6 +47,12 @@ do_build() {
 		else
 			CFLAGS+=" -DPA_BIG_ENDIAN"
 		fi
+
+		# see https://github.com/praat/praat/issues/2433
+		case "$XBPS_TARGET_MACHINE" in
+			i686*)
+				CXXFLAGS+=" -fexcess-precision=fast";;
+		esac;
 
 		make ${makejobs} CC="$CC" CXX="$CXX" LD="$LD" AR="$AR"
 

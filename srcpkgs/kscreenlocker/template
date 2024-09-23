@@ -1,33 +1,29 @@
 # Template file for 'kscreenlocker'
 pkgname=kscreenlocker
-version=5.24.5
+version=6.1.5
 revision=1
 build_style=cmake
-configure_args="-DBUILD_TESTING=OFF"
-hostmakedepends="extra-cmake-modules pkg-config kcoreaddons qt5-qmake
- qt5-host-tools gettext kcmutils"
-makedepends="kdeclarative-devel kidletime-devel kcmutils-devel
- libSM-devel kwayland-devel libXi-devel pam-devel libXcursor-devel
- layer-shell-qt-devel"
+configure_args="-DBUILD_TESTING=OFF -DKF6_HOST_TOOLING=/usr/lib/cmake
+ -DKDE_INSTALL_QTPLUGINDIR=lib/qt6/plugins"
+hostmakedepends="extra-cmake-modules pkg-config qt6-base qt6-tools gettext
+ elogind wayland-devel kf6-kpackage kf6-kcmutils"
+makedepends="kf6-kdeclarative-devel kf6-kpackage-devel kf6-kidletime-devel
+ kf6-kcmutils-devel qt6-base-private-devel
+ kf6-ksvg-devel kf6-kpackage-devel pam-devel layer-shell-qt-devel libkf6screen-devel
+ libplasma-devel wayland-devel xcb-util-keysyms-devel libxcb-devel"
 short_desc="KDE Library and components for secure lock screen architecture"
 maintainer="John <me@johnnynator.dev>"
 license="GPL-2.0-or-later"
 homepage="https://invent.kde.org/plasma/kscreenlocker"
 distfiles="${KDE_SITE}/plasma/${version}/${pkgname}-${version}.tar.xz"
-checksum=3270a1845c9fc694a50db38de4c27586d2f488152e1bcf88be0088d6799bf98e
-
-if [ "$CROSS_BUILD" ]; then
-	hostmakedepends+=" wayland-devel"
-	configure_args+=" -DDESKTOPTOJSON_EXECUTABLE=/usr/bin/desktoptojson"
-	configure_args+=" -DWaylandScanner_EXECUTABLE=/usr/bin/wayland-scanner"
-fi
+checksum=a0ea8354122a28e0acc6ec604a7658fee5b00f125cc09ea758c9b91bf3c7f0fc
 
 kscreenlocker-devel_package() {
-	short_desc+=" - development"
+	short_desc+=" - development files"
 	depends="${makedepends} ${sourcepkg}>=${version}_${revision}"
 	pkg_install() {
 		vmove usr/include
 		vmove usr/lib/cmake
-		vmove usr/lib/*.so
+		vmove "usr/lib/*.so"
 	}
 }

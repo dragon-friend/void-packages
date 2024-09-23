@@ -1,17 +1,17 @@
 # Template file for 'volta'
 pkgname=volta
-version=1.0.8
+version=2.0.1
 revision=1
 archs="x86_64" # Due to volta pulling pre-built binaries later. Evil.
 build_style="cargo"
 hostmakedepends="pkg-config"
 makedepends="openssl-devel"
 short_desc="JavaScript tool version sync helper"
-maintainer="Alex Lohr <alex.lohr@logmein.com>"
+maintainer="Alex Lohr <alexthkloss@web.de>"
 license="BSD-2-Clause"
 homepage="https://volta.sh/"
 distfiles="https://github.com/volta-cli/volta/archive/v${version}.tar.gz"
-checksum=b6d1691424b13e28a953a2661e1f3261ecbeb607574ad217e18c4cf62ab48df4
+checksum=4ccffc86b7841cb8bc9a55436529209dbbb9621992e43cbad48ccc7ffadba493
 
 post_install() {
 	vlicense LICENSE

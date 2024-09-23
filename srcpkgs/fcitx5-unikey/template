@@ -1,28 +1,24 @@
 # Template file for 'fcitx5-unikey'
 pkgname=fcitx5-unikey
-version=5.0.10
+version=5.1.4
 revision=1
 build_style=cmake
-#configure_args=""
-#make_build_args=""
-#make_install_args=""
-#conf_files=""
-#make_dirs="/var/log/dir 0755 root root"
-hostmakedepends="pkg-config gettext extra-cmake-modules qt5-devel"
-makedepends="fcitx5 libfcitx5-devel fmt-devel fcitx5-qt5-devel"
+configure_args="-DENABLE_QT=On -DUSE_QT6=On"
+hostmakedepends="pkg-config gettext extra-cmake-modules qt6-base"
+makedepends="fcitx5 libfcitx5-devel fmt-devel fcitx5-qt6-devel"
 depends="fcitx5"
 short_desc="Fcitx5 - Unikey engine"
 maintainer="Đoàn Trần Công Danh <congdanhqx@gmail.com>"
 license="GPL-2.0-or-later"
 homepage="https://fcitx-im.org/wiki/Fcitx"
-distfiles="https://download.fcitx-im.org/fcitx5/fcitx5-unikey/fcitx5-unikey-${version}.tar.xz"
-checksum=2cd2b1a28a4b7e4c5aaea412a9fef8f18f882e1c4d9c2da25809947bfda5483a
+distfiles="https://download.fcitx-im.org/fcitx5/fcitx5-unikey/fcitx5-unikey-${version}.tar.zst"
+checksum=453e74a0a763d6e9820075c26de35c6fff5c51bd893c045fadf4a300bf1a8e65
 conflicts="fcitx-unikey>=0"
 
 fcitx5-unikey-macro-editor_package() {
 	depends="${sourcepkg}>=${version}_${revision}"
 	short_desc+=" - Macro Editor"
 	pkg_install() {
-		vmove usr/lib/fcitx5/qt5
+		vmove usr/lib/fcitx5/qt6
 	}
 }

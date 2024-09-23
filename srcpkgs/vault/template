@@ -1,24 +1,26 @@
 # Template file for 'vault'
 pkgname=vault
-version=1.11.0
-revision=1
+version=1.15.0
+revision=2
 build_style=go
 go_import_path="github.com/hashicorp/vault"
 go_build_tags="release"
-_git_commit=ea296ccf58507b25051bc0597379c467046eb2f1
+_git_commit=b9b773f1628260423e6cc9745531fd903cae853f
 go_ldflags="-X ${go_import_path}/sdk/version.GitCommit=${_git_commit}"
 depends="libcap-progs"
 short_desc="Manage Secrets and Protect Sensitive Data"
 maintainer="Michael Aldridge <maldridge@voidlinux.org>"
-license="MPL-2.0"
+license="BUSL-1.1"
 homepage="https://www.vaultproject.io/"
 distfiles="https://github.com/hashicorp/vault/archive/v${version}.tar.gz"
-checksum=fb6147b6a865841a3780c417f42089bc9bb958cf522a5e669dd9722b02c0a593
+checksum=833e82773b4281a080e89cf429c512cc43c2bc77dd61a6a49b3ed43c6b43917f
 system_accounts="_vault"
 make_dirs="/var/lib/vault 0700 _vault _vault
  /etc/vault 0750 root _vault"
+repository=nonfree
 
 case "$XBPS_TARGET_MACHINE" in
+	i686*) broken="/usr/lib/go/pkg/tool/linux_386/link: mapping output file failed: cannot allocate memory";;
 	arm*) go_ldflags="$go_ldflags -linkmode=external";;
 esac
 

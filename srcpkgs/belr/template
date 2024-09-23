@@ -1,16 +1,16 @@
 # Template file for 'belr'
 pkgname=belr
-version=5.1.12
+version=5.3.79
 revision=1
 build_style=cmake
-configure_args="-DENABLE_STATIC=FALSE -DENABLE_TESTS=NO"
+configure_args="-DBUILD_SHARED_LIBS=TRUE -DENABLE_UNIT_TESTS=FALSE"
 makedepends="bctoolbox-devel"
 short_desc="ABNF Parser"
 maintainer="John <me@johnnynator.dev>"
 license="GPL-3.0-or-later"
 homepage="https://www.linphone.org"
 distfiles="https://gitlab.linphone.org/BC/public/belr/-/archive/${version}/belr-${version}.tar.gz"
-checksum=77f86470e12f8371a77c9b911705b585f97e0b983c31f33d529d3d19dc97fb56
+checksum=16e4d3a309bfec5882a1880797624877bfb0954958c4cb67d62ad460ce14cd1a
 
 belr-devel_package() {
 	short_desc+=" - development files"

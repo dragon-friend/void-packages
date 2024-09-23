@@ -1,6 +1,6 @@
 # Template file for 'tcsh'
 pkgname=tcsh
-version=6.24.01
+version=6.24.13
 revision=1
 build_style=gnu-configure
 conf_files="/etc/csh.login /etc/csh.cshrc"
@@ -10,8 +10,12 @@ maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="BSD-3-Clause"
 homepage="https://www.tcsh.org/"
 distfiles="https://astron.com/pub/${pkgname}/${pkgname}-${version}.tar.gz"
-checksum=5659a1b973b1f947e36238cb17a00210ac4cff3b496f8f851acd77172ab91d7e
+checksum=1e927d52e9c85d162bf985f24d13c6ccede9beb880d86fec492ed15480a5c71a
 register_shell="/bin/tcsh /bin/csh"
+
+if [ "$XBPS_TARGET_LIBC" = "glibc" ]; then
+	makedepends+=" libxcrypt-devel"
+fi
 
 post_extract() {
 	sed -i '/define BSDWAIT/d' sh.proc.c

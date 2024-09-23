@@ -1,0 +1,26 @@
+# Template file for 'Gokapi'
+pkgname=Gokapi
+version=1.9.1
+revision=2
+build_style=go
+go_import_path=github.com/forceu/gokapi
+go_package="${go_import_path}/cmd/gokapi"
+short_desc="Lightweight, self-hosted Firefox Send alternative"
+maintainer="Andrew J. Hesford <ajh@sideband.org>"
+license="AGPL-3.0-only"
+homepage="https://github.com/Forceu/Gokapi"
+distfiles="${homepage}/archive/v${version}.tar.gz"
+checksum=3e75d63fa0ddb259f03e80f5a40775d3d3a5a176224dea4f5d23c4ed72ebe3be
+system_accounts="_gokapi"
+_gokapi_homedir="/var/lib/gokapi"
+make_dirs="/var/lib/gokapi 700 _gokapi _gokapi"
+
+pre_build() {
+	env -i GOPATH="${GOPATH}" GOCACHE="${GOCACHE}" GOPROXY="${GOPROXY}" \
+		go generate ./...
+}
+
+post_install() {
+	vlicense LICENSE.md
+	vsv gokapi
+}

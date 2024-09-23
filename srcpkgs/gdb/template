@@ -1,7 +1,7 @@
 # Template file for 'gdb'
 pkgname=gdb
-version=11.1
-revision=2
+version=15.1
+revision=1
 build_style=gnu-configure
 pycompile_dirs="/usr/share/gdb/python"
 configure_args="--disable-werror --disable-nls --with-system-readline
@@ -11,20 +11,22 @@ configure_args="--disable-werror --disable-nls --with-system-readline
  $(vopt_with guile) $(vopt_if python --with-python=/usr/bin/python3)
  $(vopt_with debuginfod)"
 hostmakedepends="pkg-config texinfo $(vopt_if python python3-devel) $(vopt_if guile guile)"
-makedepends="expat-devel ncurses-devel readline-devel zlib-devel gmp-devel
+makedepends="expat-devel ncurses-devel readline-devel zlib-devel gmp-devel mpfr-devel
  $(vopt_if debuginfod elfutils-devel) $(vopt_if guile guile-devel)
  $(vopt_if python 'gettext-devel python3-devel')"
 depends="gdb-common>=${version}_${revision}"
 checkdepends="dejagnu"
 short_desc="GNU Debugger"
-maintainer="Anthony Iliopoulos <ailiop@altatus.com>"
+maintainer="Duncaen <duncaen@voidlinux.org>"
 license="GPL-3.0-or-later"
 homepage="https://www.gnu.org/software/gdb"
+changelog="https://sourceware.org/git/?p=binutils-gdb.git;a=blob_plain;f=gdb/NEWS;hb=HEAD"
 distfiles="${GNU_SITE}/gdb/gdb-${version}.tar.xz"
-checksum=cccfcc407b20d343fb320d4a9a2110776dd3165118ffd41f4b1b162340333f94
+checksum=38254eacd4572134bca9c5a5aa4d4ca564cbbd30c369d881f733fb6b903354f2
 make_check=extended  # Tests take too long, not all of them pass.
-python_version=3
-patch_args="-Np1"
+
+python_version="3"
+
 ignore_elf_files="
  /usr/share/gdb/guile/gdb/support.go
  /usr/share/gdb/guile/gdb/experimental.go
@@ -46,14 +48,39 @@ build_options_default="debuginfod gdbserver python"
 vopt_conflict gdbserver static
 vopt_conflict debuginfod static
 
+if [ "$XBPS_TARGET_WORDSIZE" -eq 64 ]; then
+	build_options_default+=" multiarch"
+fi
+
+if [ "$build_option_multiarch" ]; then
+	if [ "$XBPS_TARGET_WORDSIZE" -eq 32 ]; then
+		broken="run-cris link fails: undefined reference to bpf_match_insn etc"
+	fi
+	subpackages="gdb-multiarch"
+fi
+subpackages+=" gdb-common"
+
 post_install() {
 	# resolve conflicts with binutils
-	rm -r ${DESTDIR}/usr/{include,lib,share/info/bfd.info*}
+	rm -rf ${DESTDIR}/usr/{include,lib}
+	rm -rf ${DESTDIR}/usr/share/info/{bfd,ctf-spec,sframe-spec}.info*
+	# resolve conflict with cross-arm-non-eabi-gdb
+	rm -rf ${DESTDIR}/usr/share/doc/{arm,erc32,frv,or1k,ppc,rx}
 }
 
 gdb-common_package() {
 	short_desc+=" - common files"
 	pkg_install() {
 		vmove usr/share
+	}
+}
+
+gdb-multiarch_package() {
+	short_desc+=" - all architectures"
+	depends="${sourcepkg}>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/bin/run-*"
+		vmove usr/bin/sis
+		vmove usr/share/gdb/dtb
 	}
 }

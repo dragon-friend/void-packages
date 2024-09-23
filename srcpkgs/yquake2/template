@@ -1,8 +1,7 @@
 # Template file for 'yquake2'
 pkgname=yquake2
-version=8.10
+version=8.41
 revision=1
-wrksrc="quake2-${version}"
 build_style=cmake
 configure_args="-DSYSTEMWIDE_SUPPORT=ON"
 hostmakedepends="pkg-config"
@@ -14,7 +13,7 @@ maintainer="Helmut Pozimski <helmut@pozimski.eu>"
 license="GPL-2.0-or-later"
 homepage="https://www.yamagi.org/quake2/"
 distfiles="https://deponie.yamagi.org/quake2/quake2-${version}.tar.xz"
-checksum=93d625f67bd365d943113f6aa7c65f6fd2bd4c46c4ab77eedc4642735c143ea1
+checksum=edb37e0634953d16b4e0f3a3152e4ddc097def5f6061629392ad90a1a785309e
 
 case "$XBPS_TARGET_MACHINE" in
 	armv*) makedepends+=" MesaLib-devel";;
@@ -39,4 +38,5 @@ do_install() {
 	# needed because the game currently won't start when the directory doesn't exist
 	vmkdir usr/share/games/quake2
 	touch ${DESTDIR}/usr/share/games/quake2/.emptydir
+	vdoc "${FILESDIR}/README.voidlinux"
 }

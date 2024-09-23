@@ -1,27 +1,45 @@
 # Template file for 'poppler'
 #
 # THIS PKG MUST BE SYNCHRONIZED WITH "srcpkgs/poppler-qt5".
-#
 pkgname=poppler
-version=21.07.0
+version=24.08.0
 revision=1
+_testVersion=ff3133cdb6cb496ee1d2c3231bfa35006a5e8410
+create_wrksrc=yes
 build_style=cmake
 build_helper="gir"
 configure_args="-DENABLE_UNSTABLE_API_ABI_HEADERS=ON -DENABLE_CPP=ON
  -DENABLE_GLIB=ON -DENABLE_GOBJECT_INTROSPECTION=$(vopt_if gir ON OFF)
- -DENABLE_QT5=OFF -DENABLE_UTILS=ON -DENABLE_BOOST=$(vopt_if boost ON OFF)"
+ -DENABLE_QT5=OFF -DENABLE_QT6=OFF -DENABLE_UTILS=ON
+ -DENABLE_BOOST=$(vopt_if boost ON OFF)
+ -DTESTDATADIR='${XBPS_BUILDDIR}/poppler-${version}/testdatadir'"
 hostmakedepends="pkg-config glib-devel"
 makedepends="libpng-devel libglib-devel cairo-devel tiff-devel lcms2-devel
-libcurl-devel libopenjpeg2-devel $(vopt_if boost boost-devel)"
+ nss-devel libcurl-devel libopenjpeg2-devel gpgmepp-devel
+ zlib-devel $(vopt_if boost boost-devel)"
 short_desc="PDF rendering library"
 maintainer="Orphaned <orphan@voidlinux.org>"
 license="GPL-2.0-or-later, GPL-3.0-or-later"
 homepage="https://poppler.freedesktop.org"
-distfiles="${homepage}/${pkgname}-${version}.tar.xz"
-checksum=e26ab29f68065de4d6562f0a3e2b5435a83ca92be573b99a1c81998fa286a4d4
+changelog="https://gitlab.freedesktop.org/poppler/poppler/-/raw/master/NEWS"
+distfiles="https://poppler.freedesktop.org/poppler-${version}.tar.xz
+ https://gitlab.freedesktop.org/poppler/test/-/archive/${_testVersion}/test-${_testVersion}.tar.gz"
+checksum="97453fbddf0c9a9eafa0ea45ac710d3d49bcf23a62e864585385d3c0b4403174
+ 98a06e7dd7619fe20bfd99505a31993dbe40517678d81278e6395a30a40f03bf"
 
 build_options="gir boost"
 build_options_default="gir boost"
+
+if [ "$XBPS_CHECK_PKGS" ]; then
+	configure_args+=" -DBUILD_MANUAL_TESTS=ON -DBUILD_CPP_TESTS=ON"
+else
+	configure_args+=" -DBUILD_MANUAL_TESTS=OFF -DBUILD_CPP_TESTS=OFF"
+fi
+
+post_extract() {
+	mv poppler-*/* .
+	mv test-${_testVersion} testdatadir
+}
 
 libpoppler_package() {
 	depends="poppler-data"

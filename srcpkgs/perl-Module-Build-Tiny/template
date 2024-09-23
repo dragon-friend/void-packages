@@ -1,10 +1,10 @@
 # Template file for 'perl-Module-Build-Tiny'
 pkgname=perl-Module-Build-Tiny
-version=0.039
-revision=3
-wrksrc="${pkgname/perl-/}-${version}"
+version=0.051
+revision=1
 build_style=perl-ModuleBuild
-hostmakedepends="perl perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths"
+hostmakedepends="perl perl-ExtUtils-Config perl-ExtUtils-Helpers
+ perl-ExtUtils-InstallPaths perl-CPAN-Requirements-Dynamic"
 makedepends="${hostmakedepends}"
 depends="${makedepends}"
 short_desc="Module::Build::Tiny - A tiny replacement for Module::Build"
@@ -12,4 +12,4 @@ maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="Artistic-1.0-Perl, GPL-1.0-or-later"
 homepage="https://metacpan.org/release/Module-Build-Tiny"
 distfiles="${CPAN_SITE}/Module/${pkgname/perl-/}-${version}.tar.gz"
-checksum=7d580ff6ace0cbe555bf36b86dc8ea232581530cbeaaea09bccb57b55797f11c
+checksum=74fdce35e8cd4d787bc2d4fc1d43a291b7bbced4e94dc5fc592bd81ca93a98e9

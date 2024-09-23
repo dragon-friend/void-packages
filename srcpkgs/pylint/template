@@ -1,29 +1,33 @@
 # Template file for 'pylint'
 pkgname=pylint
-version=2.14.2
+version=3.3.0
 revision=1
-build_style=python3-module
+build_style=python3-pep517
+make_build_args="--skip-dependency-check"
 make_check_args="--deselect=tests/benchmark/test_baseline_benchmarks.py"
-hostmakedepends="python3-setuptools"
+hostmakedepends="python3-wheel"
 depends="python3-astroid python3-isort python3-mccabe python3-tomlkit
  python3-platformdirs python3-dill"
 checkdepends="$depends python3-pytest python3-tkinter python3-six
  python3-GitPython git"
 short_desc="Python code static checker"
-maintainer="Michal Vasilek <michal@vasilek.cz>"
+maintainer="André L. C. Moreira <andrelcmoreira@disroot.org>"
 license="GPL-2.0-or-later"
-homepage="https://www.pylint.org/"
-changelog="https://raw.githubusercontent.com/PyCQA/pylint/main/doc/whatsnew/${version%.*.*}/${version%.*}/summary.rst"
+homepage="https://pylint.pycqa.org"
 distfiles="https://github.com/PyCQA/pylint/archive/refs/tags/v$version.tar.gz"
-checksum=f7420e582f5852599f866e727071542801adbad59b5e93e61a0147e056e94bc7
-make_check=no # FIXME
+checksum=fff8b671e0d3daeef20c23c4925cc4ed2e52ecd38dc59b45428934007ad0b034
+
+do_check() {
+	# FIXME: run upstream test suite
+	# for now, let's just try to verify that pylint can run and dependencies
+	# are correct
+	PYTHONPATH=. python3 -m pylint --version
+}
 
 post_install() {
 	# install example config and emacs files
 	vsconf examples/pylintrc
 	vsconf examples/pylintrc_camelcase
-	vsconf elisp/pylint.el
-	vsconf elisp/pylint-flymake.el
 }
 
 python3-pylint_package() {

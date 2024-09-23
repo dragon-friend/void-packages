@@ -1,7 +1,8 @@
 # Template file for 'synfigstudio'
+# Should be kept in sync with 'synfig' and 'ETL'
 pkgname=synfigstudio
-version=1.4.2
-revision=1
+version=1.4.5
+revision=2
 build_style=gnu-configure
 configure_args="--disable-update-mimedb"
 hostmakedepends="pkg-config intltool gettext synfig"
@@ -12,7 +13,7 @@ maintainer="newbluemoon <blaumolch@mailbox.org>"
 license="GPL-2.0-or-later"
 homepage="https://www.synfig.org/"
 distfiles="https://github.com/synfig/synfig/releases/download/v${version}/synfigstudio-${version}.tar.gz"
-checksum=4e86d4d8def6675fc92855a411795cc4062a1669cda82535d18b48a68b4d5497
+checksum=82a2d8a6d03f72443f8ddeb9d7ea38214313c1ac56f4ddba3e872464e8f91568
 python_version=3
 CXXFLAGS="-Wno-deprecated-copy -DHAVE_LOCALE_H=1"
 export DATADIRNAME=share

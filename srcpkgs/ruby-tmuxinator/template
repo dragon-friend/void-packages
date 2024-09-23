@@ -1,16 +1,20 @@
 # Template file for 'ruby-tmuxinator'
 pkgname=ruby-tmuxinator
-version=0.16.0
-revision=5
-build_style=gem
-depends="ruby-erubis>=2.6 ruby-thor>=0.15.0 ruby-xdg>=2.2.3 tmux"
+version=3.3.0
+revision=2
+build_style=gemspec
+depends="ruby-erubi>=1.7 ruby-thor>=1.3.0 ruby-xdg>=4.3.0 tmux"
 short_desc="Create and manage complex tmux sessions easily"
-maintainer="Alexander Egorenkov <egorenar-dev@posteo.net>"
+maintainer="dataCobra <datacobra@thinkbot.de>"
 license="MIT"
 homepage="https://github.com/tmuxinator/tmuxinator"
-checksum=296f370ee7cfffd91ee42ab301479c7e632091097001728f6f2a84b629469538
+changelog="https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/CHANGELOG.md"
+distfiles="https://github.com/tmuxinator/tmuxinator/archive/refs/tags/v${version}.tar.gz"
+checksum=e15cf0d7fc8fc88b89adbeeebacd8061620c759da060b1bccf93bf8541679061
 
 post_install() {
-	$XBPS_FETCH_CMD https://raw.githubusercontent.com/tmuxinator/tmuxinator/v${version}/LICENSE
 	vlicense LICENSE
+	for sh in bash fish zsh; do
+		vcompletion "completion/tmuxinator.${sh}" ${sh} tmuxinator
+	done
 }

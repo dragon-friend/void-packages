@@ -1,18 +1,17 @@
 # Template file for 'aclip'
 # !! keep synced with arcan
 pkgname=aclip
-version=0.6.1.1
+version=0.6.3.3
 revision=1
-wrksrc=arcan-${version}
 build_wrksrc=src/tools/aclip
 build_style=cmake
 makedepends="arcan-devel"
 short_desc="Clipboard manager for Arcan"
-maintainer="Piraty <piraty1@inbox.ru>"
+maintainer="Piraty <mail@piraty.dev>"
 license="BSD-3-Clause"
 homepage="https://arcan-fe.com/"
 distfiles="https://github.com/letoram/arcan/archive/${version}.tar.gz"
-checksum=3c36bbc53a276c03776134407b662beb1181e43c5f8d0aabe7c6fae6652cc29e
+checksum=77ae043899a28110012d6f930e101d173214e6649af87564d05ccfaca5d0d726
 
 post_install() {
 	vlicense ../../../COPYING

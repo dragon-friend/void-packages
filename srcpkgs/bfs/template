@@ -1,9 +1,10 @@
 # Template file for 'bfs'
 pkgname=bfs
-version=2.6
+version=3.3.1
 revision=1
-build_style=gnu-makefile
-makedepends="acl-devel libcap-devel oniguruma-devel"
+build_style=configure
+configure_args="--enable-release"
+makedepends="acl-devel libcap-devel liburing-devel oniguruma-devel"
 checkdepends="acl-progs libcap-progs"
 short_desc="Breadth-first version of the UNIX find command"
 maintainer="Daniel Eyßer <daniel.eysser@gmail.com>"
@@ -11,7 +12,12 @@ license="0BSD"
 homepage="https://github.com/tavianator/bfs"
 changelog="https://raw.githubusercontent.com/tavianator/bfs/main/docs/CHANGELOG.md"
 distfiles="https://github.com/tavianator/bfs/archive/${version}.tar.gz"
-checksum=5812a4c62004c851eb02e23c0b6698dbb40061ce1c4069bb33c5b14f5361d81b
+checksum=8fb3df6687cd0a50411c5b381317d10590787e262d44fc5f0d294a64f0ab397d
+
+alternatives="
+ find:find:/usr/bin/bfs
+ find:find.1:/usr/share/man/man1/bfs.1
+"
 
 post_install() {
 	vlicense LICENSE

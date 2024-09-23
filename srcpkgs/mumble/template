@@ -1,11 +1,10 @@
 # Template file for 'mumble'
 pkgname=mumble
-version=1.4.230
-revision=4
-wrksrc=mumble-${version}.src
+version=1.5.634
+revision=1
 build_style=cmake
 make_cmd=make
-configure_args="-Doverlay-xcompile=OFF -Dbundled-opus=OFF
+configure_args="-Doverlay-xcompile=OFF -DCMAKE_CXX_STANDARD=17
  -Dbundled-speex=OFF -Djackaudio=$(vopt_if jack ON OFF) -Dportaudio=$(vopt_if portaudio ON OFF)
  -Dupdate=OFF -Dbundle-qt-translations=OFF -Dwarnings-as-errors=OFF"
 hostmakedepends="Ice pkg-config protobuf qt5-host-tools qt5-qmake python3 which"
@@ -21,26 +20,32 @@ maintainer="Helmut Pozimski <helmut@pozimski.eu>"
 license="BSD-3-Clause"
 homepage="https://mumble.info"
 distfiles="https://github.com/mumble-voip/${pkgname}/releases/download/v${version}/${pkgname}-${version}.tar.gz"
-checksum=b67d82b4e6cc5834b965c5bc25339e456534bbd5b9dda6c8c95cf9cb80e434b0
+checksum=904f3633d28ab0e6925caeff2c65802f586abefdf6d20162f20a71805c2c5929
 
 build_options="jack portaudio"
 build_options_default="jack portaudio"
 
+
 export CMAKE_GENERATOR="Unix Makefiles"
+LDFLAGS="-Wl,--copy-dt-needed-entries"
 
 post_install() {
-	vbin ${wrksrc}/scripts/murmur-user-wrapper
-	vsconf scripts/murmur.ini
+	rm -f ${DESTDIR}/usr/share/man/man1/murmur-user-wrapper.1
+	vsv mumble-server
+	ln -sf murmurd.1 ${DESTDIR}/usr/share/man/man1/mumble-server.1
 	vlicense LICENSE
 }
 
 murmur_package() {
+	system_accounts="_murmur"
+	_murmur_homedir="/var/lib/murmur"
+	make_dirs="/var/lib/murmur 0750 _murmur _murmur"
+	depends="qt5-plugin-sqlite"
 	short_desc+=" - Server software (mumble-server)"
 	pkg_install() {
+		vmove etc/sv/mumble-server
 		vmove usr/bin/mumble-server
-		vmove usr/bin/murmur-user-wrapper
-		vmove usr/share/man/man1/murmur-user-wrapper.1
-		vmove usr/share/man/man1/murmurd.1
-		vmove usr/share/examples/mumble/murmur.ini
+		vmove usr/share/man/man1/mumble-server.1
+		vmove usr/share/man/man1/mumble-server-user-wrapper.1
 	}
 }

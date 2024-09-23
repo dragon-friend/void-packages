@@ -1,21 +1,20 @@
 # Template file for 'mergerfs'
 pkgname=mergerfs
-version=2.32.4
+version=2.38.0
 revision=1
 build_style=gnu-makefile
 make_use_env=yes
 hostmakedepends="automake libtool pkg-config which"
 makedepends="fuse-devel"
 short_desc="FUSE union filesystem"
-maintainer="Orphaned <orphan@voidlinux.org>"
+maintainer="Pulux <pulux@pf4sh.eu>"
 license="ISC"
 homepage="https://github.com/trapexit/mergerfs"
-distfiles="${homepage}/archive/${version}.tar.gz"
-checksum=8857d2058c38251bff539c77b6c90472ab139bda96265ce09485c3689d11a4ac
+distfiles="https://github.com/trapexit/mergerfs/archive/refs/tags/${version}.tar.gz"
+checksum=cdb855c797da16ae668a2f71f76830151c377b38dee698c63db092ca1635d95e
 
 pre_build() {
-	# we build from source, spoof release tarball
-	vsed -i "s|^VERSION=.*|VERSION=$pkgver|" tools/update-version
+	echo "$version" > VERSION
 }
 
 post_install() {

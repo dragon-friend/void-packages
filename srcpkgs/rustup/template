@@ -1,6 +1,6 @@
 # Template file for 'rustup'
 pkgname=rustup
-version=1.24.3
+version=1.27.1
 revision=1
 # rustup doesn't recognize this target
 archs="~armv*-musl"
@@ -11,11 +11,12 @@ configure_args="--bin rustup-init --no-default-features
 hostmakedepends="pkg-config"
 makedepends="openssl-devel zlib-devel libcurl-devel"
 short_desc="Rust toolchain installer"
-maintainer="Jan Christian Grünhage <jan.christian@gruenhage.xyz>"
+maintainer="tranzystorekk <tranzystorek.io@protonmail.com>"
 license="Apache-2.0, MIT"
 homepage="https://www.rustup.rs"
-distfiles="https://github.com/rust-lang/${pkgname}/archive/${version}.tar.gz"
-checksum=24a8cede4ccbbf45ab7b8de141d92f47d1881bb546b3b9180d5a51dc0622d0f6
+changelog="https://raw.githubusercontent.com/rust-lang/rustup/master/CHANGELOG.md"
+distfiles="https://github.com/rust-lang/rustup/archive/refs/tags/${version}.tar.gz"
+checksum=f5ba37f2ba68efec101198dca1585e6e7dd7640ca9c526441b729a79062d3b77
 
 case "$XBPS_TARGET_MACHINE" in
 	x86_64*|i686*|arm*|aarch64*)

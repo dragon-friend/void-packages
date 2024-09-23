@@ -1,20 +1,20 @@
 # Template file for 'meson'
 pkgname=meson
-version=0.62.2
-revision=1
+version=1.4.0
+revision=2
 build_style=python3-module
 hostmakedepends="python3-devel python3-setuptools"
 depends="ninja python3-setuptools"
 checkdepends="glib-devel gobject-introspection ninja
- gcc-objc++ clang qt5-devel cmake llvm git pkg-config vala python-devel
- cross-arm-linux-gnueabihf"
+ gcc-objc++ clang qt5-devel qt6-tools cmake llvm git pkg-config vala
+ python3-devel cross-arm-linux-gnueabihf"
 short_desc="Super fast build system"
-maintainer="Michal Vasilek <michal@vasilek.cz>"
+maintainer="Orphaned <orphan@voidlinux.org>"
 license="Apache-2.0"
 homepage="https://mesonbuild.com"
-changelog="https://github.com/mesonbuild/meson/blob/master/docs/markdown/Release-notes-for-${version%.*}.0.md"
-distfiles="https://github.com/mesonbuild/meson/releases/download/$version/$pkgname-$version.tar.gz"
-checksum=a7669e4c4110b06b743d57cc5d6432591a6677ef2402139fe4f3d42ac13380b0
+changelog="https://raw.githubusercontent.com/mesonbuild/meson/master/docs/markdown/Release-notes-for-${version%.*}.0.md"
+distfiles="https://github.com/mesonbuild/meson/releases/download/${version}/meson-${version}.tar.gz"
+checksum=8fd6630c25c27f1489a8a0392b311a60481a3c161aa699b330e25935b750138d
 
 # XXX: sanitizers aren't available on musl
 if [ "$XBPS_TARGET_LIBC" = glibc ]; then
@@ -31,7 +31,6 @@ post_patch() {
 do_check() {
 	# meson depends on trillion of things to perform actual tests
 	# see checkdepends=() on arch
-	# 1 test still fails
 	( CC=gcc ./run_unittests.py )
 }
 

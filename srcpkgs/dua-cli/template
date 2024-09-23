@@ -1,15 +1,15 @@
 # Template file for 'dua-cli'
 pkgname=dua-cli
-version=2.17.7
+version=2.29.2
 revision=1
 build_style=cargo
 short_desc="Tool to conveniently learn about the disk usage of directories"
-maintainer="Jan Christian Grünhage <jan.christian@gruenhage.xyz>"
+maintainer="cinerea0 <cinerea0@protonmail.com>"
 license="MIT"
 homepage="https://github.com/Byron/dua-cli"
 changelog="https://raw.githubusercontent.com/Byron/dua-cli/main/CHANGELOG.md"
-distfiles="https://github.com/Byron/dua-cli/archive/v${version}.tar.gz"
-checksum=6ef774e96d256bc450da201f6f69b355c88a5dc0aa8d5ef21acda9394bf18482
+distfiles="https://github.com/Byron/dua-cli/archive/refs/tags/v${version}.tar.gz"
+checksum=76ebd07c4a4379ef0d45232fa7a9b0bcbff1bd54fad6930ec1a2823806473f5d
 
 post_install() {
 	vlicense LICENSE

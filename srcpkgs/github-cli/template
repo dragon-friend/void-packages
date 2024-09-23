@@ -1,19 +1,24 @@
 # Template file for 'github-cli'
 pkgname=github-cli
-version=2.13.0
+version=2.57.0
 revision=1
-wrksrc="cli-${version}"
 build_style=go
 build_helper=qemu
-go_import_path="github.com/cli/cli/v2/cmd/gh"
+go_import_path="github.com/cli/cli/v2"
+go_package="${go_import_path}/cmd/gh"
 go_ldflags="-X github.com/cli/cli/v2/internal/build.Version=v${version}"
+checkdepends="git openssh"
 short_desc="GitHub CLI tool"
-maintainer="shizonic <realtiaz@gmail.com>"
+maintainer="tranzystorekk <tranzystorek.io@protonmail.com>"
 license="MIT"
 homepage="https://cli.github.com"
 changelog="https://github.com/cli/cli/releases"
-distfiles="https://github.com/cli/cli/archive/v${version}.tar.gz"
-checksum=f8bc46bda990bc9947a26f5505533b86903c96f95047b2dacf7c9534e5b86760
+distfiles="https://github.com/cli/cli/archive/refs/tags/v${version}.tar.gz"
+checksum=6433bca534da722a980126541fe28d278f4b3518a6f7a7ef4a23949a3968e8b9
+
+if [ "${XBPS_BUILD_ENVIRONMENT}" = void-packages-ci ]; then
+	make_check_args+=" -skip TestMigrationWriteErrors"
+fi
 
 pre_build() {
 	local _date
@@ -23,19 +28,14 @@ pre_build() {
 	fi
 }
 
-post_build() {
-	CGO_ENABLED=0 GOARCH="" go run script/build.go manpages
-	gh=$(find $GOPATH/bin -name gh)
-	for shell in bash fish zsh; do
-		vtargetrun $gh completion -s $shell > github-cli.$shell
-	done
-}
-
 post_install() {
 	vlicense LICENSE
 
+	CGO_ENABLED=0 GOARCH="" go run script/build.go manpages
 	vcopy share/man usr/share
+
 	for shell in bash fish zsh; do
-		vcompletion github-cli.$shell $shell gh
+		vtargetrun "${DESTDIR}/usr/bin/gh" completion -s ${shell} > github-cli.${shell}
+		vcompletion github-cli.${shell} ${shell} gh
 	done
 }

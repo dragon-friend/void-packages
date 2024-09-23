@@ -1,15 +1,15 @@
 # Template file for 'tflint'
 pkgname=tflint
-version=0.22.0
-revision=1
+version=0.52.0
+revision=2
 build_style=go
-go_import_path="github.com/terraform-linters/$pkgname"
+go_import_path="github.com/terraform-linters/tflint"
 short_desc="Terraform linter focused on possible errors, best practices, etc"
-maintainer="Sora Morimoto <sora@morimoto.io>"
+maintainer="Emil Tomczyk <emru@emru.xyz>"
 license="MPL-2.0"
 homepage="https://github.com/terraform-linters/tflint"
-distfiles="${homepage}/archive/v${version}.tar.gz"
-checksum=a67684904b52f53dc0d5cc26c35927323f458507cbc5abee19351736a955912d
+distfiles="https://github.com/terraform-linters/tflint/archive/v${version}.tar.gz"
+checksum=18ccb225df4616b3c91681d5b2ace423e4522c4cc71c68e6d1df665d6f0a7cdd
 
 post_install() {
 	vlicense LICENSE

@@ -1,20 +1,22 @@
 # Template file for 'skopeo'
 pkgname=skopeo
-version=1.7.0
-revision=1
+version=1.16.0
+revision=2
 build_style=go
-go_import_path="github.com/containers/${pkgname}"
-go_package="${go_import_path}/cmd/${pkgname}"
+build_helper=qemu
+go_import_path="github.com/containers/skopeo"
+go_package="${go_import_path}/cmd/skopeo"
 go_build_tags="containers_image_ostree_stub"
 hostmakedepends="go-md2man pkg-config"
 makedepends="device-mapper-devel gpgme-devel libbtrfs-devel"
-depends="containers.image"
+depends="containers.image containers.storage"
 short_desc="Utility for operations on container images and image repositories"
-maintainer="Cameron Nemo <cnemo@tutanota.com>"
+maintainer="Cameron Nemo <cam@nohom.org>"
 license="Apache-2.0"
 homepage="https://github.com/containers/skopeo"
-distfiles="https://github.com/containers/${pkgname}/archive/v${version}.tar.gz"
-checksum=453bdcce16767696ed71046b60ad7b34358b183b50eb5aa708ced0b5ea2927b1
+changelog="https://github.com/containers/skopeo/releases"
+distfiles="https://github.com/containers/skopeo/archive/refs/tags/v${version}.tar.gz"
+checksum=fed91fd067605460ef33431163227471b1e85c8768203fc393345d6ffd645448
 make_dirs="/var/lib/atomic/sigstore 0755 root root"
 
 post_build() {
@@ -22,8 +24,11 @@ post_build() {
 }
 
 post_install() {
-	vinstall completions/bash/skopeo 644 usr/share/bash-completion/completions
 	for m in docs/*.1; do
 		vman "$m"
+	done
+	for shell in bash fish zsh; do
+		vtargetrun "${DESTDIR}/usr/bin/skopeo" completion "${shell}" > "skopeo.${shell}"
+		vcompletion "skopeo.${shell}" "${shell}"
 	done
 }

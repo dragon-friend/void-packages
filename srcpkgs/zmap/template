@@ -1,31 +1,29 @@
 # Template file for 'zmap'
 pkgname=zmap
-version=2.1.1
-revision=5
+version=4.2.0
+revision=1
 build_style=cmake
-conf_files="/etc/zmap/blacklist.conf /etc/zmap/zmap.conf"
 hostmakedepends="flex byacc gengetopt pkg-config"
-makedepends="libpcap-devel gmp-devel json-c-devel"
+makedepends="libpcap-devel gmp-devel json-c-devel libunistring-devel
+ judy-devel"
 short_desc="Fast network scanner designed for Internet-wide network surveys"
-maintainer="Duncaen <mail@duncano.de>"
+maintainer="Duncaen <duncaen@voidlinux.org>"
 license="Apache-2.0"
 homepage="https://zmap.io"
+changelog="https://raw.githubusercontent.com/zmap/zmap/main/CHANGELOG.md"
 distfiles="https://github.com/zmap/zmap/archive/v${version}.tar.gz"
-checksum=29627520c81101de01b0213434adb218a9f1210bfd3f2dcfdfc1f975dbce6399
+checksum=2580e41fbb56b7576530b2cdcac6dd6b5e167197a6981e330d56cfb14b3d3ebf
 make_check=no # does not define any checks
 
-do_configure() {
-	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .
+conf_files="
+ /etc/zmap/blocklist.conf
+ /etc/zmap/zmap.conf"
+
+post_patch() {
+	vsed -e 's/\(RUNTIME DESTINATION\) sbin/\1 bin/' -i src/CMakeLists.txt
 }
 
-do_build() {
-	make ${makejobs}
-}
-
-do_install() {
-	make DESTDIR="$DESTDIR" install
-	vmkdir usr/bin
-	mv ${DESTDIR}/usr/sbin/* ${DESTDIR}/usr/bin
+post_install() {
 	vmkdir etc/zmap
 	vcopy conf/* etc/zmap
 }

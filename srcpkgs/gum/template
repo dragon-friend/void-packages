@@ -1,0 +1,26 @@
+# Template file for 'gum'
+pkgname=gum
+version=0.14.3
+revision=2
+build_style=go
+build_helper=qemu
+go_import_path="github.com/charmbracelet/gum"
+go_ldflags="-X main.Version=${version}"
+short_desc="Tool for glamorous shell scripts"
+maintainer="zenobit <zenobit@disroot.org>"
+license="MIT"
+homepage="https://github.com/charmbracelet/gum"
+changelog="https://github.com/charmbracelet/gum/releases"
+distfiles="https://github.com/charmbracelet/gum/archive/refs/tags/v${version}.tar.gz"
+checksum=954e37c4c35e877bffd5bec7c794bee254db95f8a4e005136d94c7db456db398
+
+post_install() {
+	vlicense LICENSE
+
+	for shell in bash fish zsh; do
+		vtargetrun ${DESTDIR}/usr/bin/gum completion $shell > gum.${shell}
+		vcompletion gum.${shell} $shell
+	done
+	vtargetrun ${DESTDIR}/usr/bin/gum man > gum.1
+	vman gum.1
+}

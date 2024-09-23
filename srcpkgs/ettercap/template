@@ -1,7 +1,7 @@
 # Template file for 'ettercap'
 pkgname=ettercap
 version=0.8.3.1
-revision=2
+revision=3
 build_style=cmake
 configure_args="-DENABLE_GTK=OFF -DBUNDLED_LIBS=OFF"
 hostmakedepends="flex pkg-config"
@@ -15,8 +15,6 @@ homepage="http://ettercap.github.com/ettercap/"
 distfiles="https://github.com/Ettercap/ettercap/archive/v${version}.tar.gz"
 checksum=d0c3ef88dfc284b61d3d5b64d946c1160fd04276b448519c1ae4438a9cdffaf3
 lib32disabled=yes
-
-CFLAGS="-fcommon"
 
 post_extract() {
 	rm -rf bundled_deps

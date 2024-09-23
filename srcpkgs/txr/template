@@ -1,20 +1,24 @@
 # Template file for 'txr'
 pkgname=txr
-version=275
+version=296
 revision=1
-archs="x86_64* i686* aarch64* arm* ppc64* mips*"
+archs="x86_64* i686* arm*"
 build_style=configure
 configure_args="--prefix=/usr"
 make_check_target=tests
 makedepends="libffi-devel"
 short_desc="Programming language for convenient data munging"
-maintainer="Oliver Kiddle <okiddle@yahoo.co.uk>"
+maintainer="Leon (adigitoleo) <adigitoleo@posteo.net>"
 license="BSD-2-Clause"
 homepage="http://www.nongnu.org/txr/"
 changelog="http://www.kylheku.com/cgit/txr/tree/RELNOTES"
 distfiles="http://www.kylheku.com/cgit/txr/snapshot/${pkgname}-${version}.tar.bz2"
-checksum=1e6ca44f2879178f4205ad70ee8fc757a4392ecc75424c5ed0904741d1b1541e
+checksum=753e74c1f11c109a5235856b5e5800912b8267e08257a1a26f17e74efd5c2917
 nopie=yes
+
+if [ "$XBPS_TARGET_LIBC" = "glibc" ]; then
+	makedepends+=" libxcrypt-devel"
+fi
 
 if [ "$CROSS_BUILD" ]; then
 	hostmakedepends+=" txr"

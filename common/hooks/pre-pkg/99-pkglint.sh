@@ -22,12 +22,21 @@ hook() {
 		fi
 	done
 
-	for f in var/run usr/local; do
+	for f in var/run usr/local usr/etc; do
 		if [ -d ${PKGDESTDIR}/${f} ]; then
 			msg_red "${pkgver}: /${f} directory is not allowed, remove it!\n"
 			error=1
 		fi
 	done
+
+	if [ -d ${PKGDESTDIR}/usr/lib/libexec ]; then
+		# Add exception for kconfig,
+		# other packages hard-coded path to its files
+		if [ "${pkgname}" != kconfig ]; then
+			msg_red "${pkgver}: /usr/lib/libexec directory is not allowed!\n"
+			error=1
+		fi
+	fi
 
 	for f in "$PKGDESTDIR"/*; do
 		f="${f##*/}"
@@ -70,8 +79,22 @@ hook() {
 
 	# Check for l10n files in usr/lib/locale
 	if [ -d ${PKGDESTDIR}/usr/lib/locale ]; then
-		msg_red "${pkgver}: /usr/lib/locale is forbidden, use /usr/share/locale!\n"
-		error=1
+		local locale_allow=0 ldir
+		local lroot="${PKGDESTDIR}/usr/lib/locale"
+
+		if [ "${pkgname}" = "glibc" ]; then
+			# glibc gets an exception for its included C.utf8 locale
+			locale_allow=1
+			for ldir in "${lroot}"/*; do
+				[ "${ldir}" = "${lroot}/C.utf8" ] && continue
+				locale_allow=0
+			done
+		fi
+
+		if [ "${locale_allow}" -ne 1 ]; then
+			msg_red "${pkgver}: /usr/lib/locale is forbidden, use /usr/share/locale!\n"
+			error=1
+		fi
 	fi
 
 	# Check for bash completions in etc/bash_completion.d
@@ -103,8 +126,18 @@ hook() {
 		error=1
 	fi
 
+	if [ -d ${PKGDESTDIR}/usr/usr ]; then
+		msg_red "${pkgver}: /usr/usr is forbidden, use /usr.\n"
+		error=1
+	fi
+
 	if [ -d ${PKGDESTDIR}/usr/man ]; then
 		msg_red "${pkgver}: /usr/man is forbidden, use /usr/share/man.\n"
+		error=1
+	fi
+
+	if [[ -d ${PKGDESTDIR}/usr/share/man/man ]]; then
+		msg_red "${pkgver}: /usr/share/man/man is forbidden, use /usr/share/man.\n"
 		error=1
 	fi
 
@@ -115,6 +148,11 @@ hook() {
 
 	if [ -d ${PKGDESTDIR}/usr/dict ]; then
 		msg_red "${pkgver}: /usr/dict is forbidden. Use /usr/share/dict.\n"
+		error=1
+	fi
+
+	if [ -e ${PKGDESTDIR}/usr/share/glib-2.0/schemas/gschemas.compiled ]; then
+		msg_red "${pkgver}: /usr/share/glib-2.0/schemas/gschemas.compiled is forbidden. Delete it.\n"
 		error=1
 	fi
 
@@ -147,7 +185,7 @@ hook() {
 			_pattern="^${_shlib}\.so\.[0-9]+(.*)[[:blank:]]+${_pkgname}-[^-]+_[0-9]+"
 		fi
 		grep -E "${_pattern}" $mapshlibs | { \
-			while read conflictFile conflictPkg ignore; do
+			while read -r conflictFile conflictPkg ignore; do
 				found=1
 				conflictRev=${conflictFile#*.so.}
 				if [ -n "$ignore" -a "$ignore" != "$XBPS_TARGET_MACHINE" ]; then

@@ -1,21 +1,22 @@
 # Template file for 'SDL2_image'
 pkgname=SDL2_image
-version=2.0.5
+version=2.8.2
 revision=2
-build_style=gnu-configure
-configure_args="--disable-static --disable-jpg-shared
- --disable-png-shared --disable-webp-shared --disable-tif-shared"
+build_style=cmake
+configure_args="-DSDL2IMAGE_WEBP=ON"
 hostmakedepends="pkg-config"
-makedepends="libpng-devel tiff-devel SDL2-devel libwebp-devel"
+makedepends="SDL2-devel libjpeg-turbo-devel libpng-devel libwebp-devel
+ tiff-devel zlib-devel"
 short_desc="Load images as SDL surfaces (SDL 2.x)"
-maintainer="Orphaned <orphan@voidlinux.org>"
+maintainer="André Cerqueira <acerqueira021@gmail.com>"
 license="Zlib"
-homepage="http://www.libsdl.org/projects/SDL_image/"
-distfiles="http://www.libsdl.org/projects/SDL_image/release/${pkgname}-${version}.tar.gz"
-checksum=bdd5f6e026682f7d7e1be0b6051b209da2f402a2dd8bd1c4bd9c25ad263108d0
+homepage="https://github.com/libsdl-org/SDL_image"
+changelog="https://raw.githubusercontent.com/libsdl-org/SDL_image/SDL2/CHANGES.txt"
+distfiles="http://www.libsdl.org/projects/SDL_image/release/SDL2_image-${version}.tar.gz"
+checksum=8f486bbfbcf8464dd58c9e5d93394ab0255ce68b51c5a966a918244820a76ddc
 
 post_install() {
-	vlicense COPYING.txt COPYING
+	vlicense LICENSE.txt LICENSE
 }
 
 SDL2_image-devel_package() {

@@ -1,16 +1,16 @@
 # Template file for 'loksh'
 pkgname=loksh
-version=7.1
+version=7.5
 revision=1
 build_style=meson
 hostmakedepends="pkg-config"
 makedepends="ncurses-devel"
 short_desc="Linux port of OpenBSD's ksh"
-maintainer="Renato Aguiar <renato@renatoaguiar.net>"
+maintainer="Orphaned <orphan@voidlinux.org>"
 license="custom:Public Domain"
 homepage="https://github.com/dimkr/loksh"
 distfiles="https://github.com/dimkr/loksh/releases/download/${version}/loksh-${version}.tar.xz"
-checksum=ab7d274a057b83bc64643664094031126641aa91ee440a96765279991aab6938
+checksum=0c70706b2ae960af035d73d3bb5f30030286e9ebe9855363dccadb85f901adf0
 register_shell="/bin/loksh"
 
 alternatives="

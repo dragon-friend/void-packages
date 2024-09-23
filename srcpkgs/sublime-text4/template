@@ -1,13 +1,12 @@
 # Template file for 'sublime-text4'
 pkgname=sublime-text4
-version=4126
-revision=2
+version=4180
+revision=1
 archs="x86_64 aarch64"
-wrksrc="sublime_text"
 hostmakedepends="w3m"
 depends="libpng gtk+3 hicolor-icon-theme desktop-file-utils"
 short_desc="Sophisticated text editor for code, markup and prose"
-maintainer="DirectorX <void.directorx@protonmail.com>"
+maintainer="Orphaned <orphan@voidlinux.org>"
 license="custom:EULA"
 homepage="https://www.sublimetext.com/"
 conflicts="sublime-text3 sublime-text3-bin"
@@ -17,11 +16,11 @@ nopie=yes
 case "$XBPS_TARGET_MACHINE" in
 	x86_64)
 		distfiles="https://download.sublimetext.com/sublime_text_build_${version}_x64.tar.xz"
-		checksum=5c64e534cce0032e54d3c7028e8d6b3bdef28f3fd28a26244a360a2ce75450a1
+		checksum=a65e36011e33585defc77c0f49991f20fece92cba77b99ec6e6722c8952ff03e
 		;;
 	aarch64)
 		distfiles="https://download.sublimetext.com/sublime_text_build_${version}_arm64.tar.xz"
-		checksum=0ad4ac168d47034c47ab31faaa0d8b6b4f27e233ea4e48634b930bf999efb63e
+		checksum=cd18368df862fa0ea22eb305d53180613f9040a48d2355b862fd5bcfda045c78
 		;;
 esac
 _license_checksum=287d037b0ecedb68ae1e3138411d54b87172156effecd1987a5f85834aa26a24

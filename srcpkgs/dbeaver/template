@@ -1,24 +1,32 @@
 # Template file for 'dbeaver'
 pkgname=dbeaver
-version=22.1.0
+version=24.2.0
 revision=1
+_common_commit=7fbb5f8334820761c88f50932ec5fc740780e624
 # the build downloads binaries linked to glibc
 archs="x86_64 aarch64"
-hostmakedepends="apache-maven"
-depends="openjdk11" # openjdk11 or later version, when available
+build_wrksrc="dbeaver"
+hostmakedepends="apache-maven openjdk17"
+depends="openjdk17"
 short_desc="Free Universal Database Tool"
 maintainer="Kyle Nusbaum <knusbaum+void@sdf.org>"
 license="Apache-2.0"
 homepage="https://dbeaver.io"
-distfiles="https://github.com/dbeaver/dbeaver/archive/${version}.tar.gz"
-checksum=d31fb50abd96b1d3d86b03540597906447a9b6ecf612dbb0804074ec156dd8da
+changelog="https://dbeaver.io/news/"
+distfiles="https://github.com/dbeaver/dbeaver/archive/${version}.tar.gz
+ https://github.com/dbeaver/dbeaver-common/archive/${_common_commit}.tar.gz"
+checksum="9786cec52994dd873857d3af49dcac5b9bda8683bfea42b1ec62e8b1d9832638
+ a705308315f0ca47df1544caa09e71716b3183b4c46e5998782ff85a0fe792d0"
 nopie=true
 
-if [ "$XBPS_TARGET_MACHINE" = aarch64 ]; then
-	broken="https://build.voidlinux.org/builders/aarch64_builder/builds/36442/steps/shell_3/logs/stdio"
-fi
+post_extract() {
+	mv ${wrksrc}/dbeaver-${version} ${wrksrc}/dbeaver
+	mv ${wrksrc}/dbeaver-common-${_common_commit} ${wrksrc}/dbeaver-common
+}
 
 do_build() {
+	. /etc/profile.d/jdk.sh
+	cd "product/aggregate"
 	mvn package -P all-platforms
 }
 
@@ -26,6 +34,15 @@ do_install() {
 	vmkdir /usr/lib
 	vcopy "product/community/target/products/org.jkiss.dbeaver.core.product/linux/gtk/${XBPS_TARGET_MACHINE}/dbeaver" /usr/lib/
 
+	# Delete folders with Java Native Access .so's for different architectures
+	jna_dir="${DESTDIR}/usr/lib/dbeaver/plugins/com.sun.jna_5.14.0.v20231211-1200/com/sun/jna"
+	jna_arch="linux-${XBPS_TARGET_MACHINE//_/-}"
+	find "$jna_dir" -depth -mindepth 1 -type d -not -name $jna_arch -exec rm -rf {} \;
+
 	vmkdir /usr/bin
 	ln -s /usr/lib/dbeaver/dbeaver ${DESTDIR}/usr/bin/dbeaver
+
+	vinstall product/community/icons/dbeaver.png 644 usr/share/pixmaps
+	vinstall product/community/icons/dbeaver.xpm 644 usr/share/pixmaps
+	vinstall ${FILESDIR}/dbeaver.desktop 0644 usr/share/applications
 }

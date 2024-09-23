@@ -1,6 +1,6 @@
 # Template file for 'fcitx5-anthy'
 pkgname=fcitx5-anthy
-version=5.0.11
+version=5.1.4
 revision=1
 build_style=cmake
 hostmakedepends="pkg-config gettext extra-cmake-modules"
@@ -10,13 +10,6 @@ short_desc="Fcitx5 - Anthy engine"
 maintainer="Đoàn Trần Công Danh <congdanhqx@gmail.com>"
 license="GPL-2.0-or-later"
 homepage="https://fcitx-im.org/wiki/Fcitx"
-distfiles="https://download.fcitx-im.org/fcitx5/fcitx5-anthy/fcitx5-anthy-${version}.tar.xz"
-checksum=c850bdc80052676c6ee1f600ccbcbe12bad555148d85a8f3ccae42d851fba18b
-
-fcitx5-anthy-icons_package() {
-	short_desc+=" - icons"
-	conflicts="fcitx-anthy<=0.2.3_2"
-	pkg_install() {
-		vmove usr/share/icons
-	}
-}
+distfiles="https://download.fcitx-im.org/fcitx5/fcitx5-anthy/fcitx5-anthy-${version}.tar.zst"
+checksum=7b45f4d299577d18284a48530d525fb9bb9b8a7f21f8d886ceb9ce4886926bb8
+replaces="fcitx5-anthy-icons>=0"

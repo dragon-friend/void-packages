@@ -1,37 +1,35 @@
 # Template file for 'zellij'
 pkgname=zellij
-version=0.30.0
-revision=1
-# Dependency crate `wasmer-vm` only supports the following archs: x86_64, arm64, x86
-# https://docs.wasmer.io/ecosystem/wasmer/wasmer-features#compiler-support-by-chipset
-archs="x86_64* aarch64* i686*"
+version=0.40.1
+revision=2
+# Wasmer runtime only supports the following archs: x86_64, arm64
+# https://docs.wasmer.io/runtime/features#backend-support-by-chipset
+# https://github.com/wasmerio/wasmer/issues/4244#issuecomment-1751365804
+archs="x86_64* aarch64*"
 build_style=cargo
 build_helper=qemu
-hostmakedepends="mandown"
-checkdepends="openssl-devel pkg-config"
+hostmakedepends="mandown pkg-config"
+makedepends="libcurl-devel"
+checkdepends="libssh2-devel"
 short_desc="Terminal workspace with batteries included"
-maintainer="Marcin Puc <tranzystorek.io@protonmail.com>"
+maintainer="tranzystorekk <tranzystorek.io@protonmail.com>"
 license="MIT"
 homepage="https://zellij.dev"
-changelog="https://github.com/zellij-org/zellij/blob/main/CHANGELOG.md"
-distfiles="https://github.com/zellij-org/zellij/archive/v${version}.tar.gz"
-checksum=52253271dd954e2705571a9bf2b2f7873fe47e0e5b7a2e85aac1b1c73152914c
-
-post_build() {
-	ZELLIJ="target/${RUST_TARGET}/release/zellij"
-	vtargetrun ${ZELLIJ} setup --generate-completion bash > zellij.bash
-	vtargetrun ${ZELLIJ} setup --generate-completion zsh > zellij.zsh
-	vtargetrun ${ZELLIJ} setup --generate-completion fish > zellij.fish
-
-	mandown docs/MANPAGE.md > zellij.1
-}
+changelog="https://raw.githubusercontent.com/zellij-org/zellij/main/CHANGELOG.md"
+distfiles="https://github.com/zellij-org/zellij/archive/refs/tags/v${version}.tar.gz"
+checksum=1f0bfa13f2dbe657d76341a196f98a3b4caa47ac63abee06b39883a11ca220a8
+make_check_pre="env LIBSSH2_SYS_USE_PKG_CONFIG=1"
 
 post_install() {
-	vcompletion zellij.bash bash
-	vcompletion zellij.zsh zsh
-	vcompletion zellij.fish fish
-
-	vlicense LICENSE.md
 	vdoc README.md
+	vinstall assets/zellij.desktop 644 usr/share/applications
+	vlicense LICENSE.md
+
+	for shell in bash fish zsh; do
+		vtargetrun "${DESTDIR}/usr/bin/zellij" setup --generate-completion ${shell} > zellij.${shell}
+		vcompletion zellij.${shell} ${shell}
+	done
+
+	mandown docs/MANPAGE.md > zellij.1
 	vman zellij.1
 }

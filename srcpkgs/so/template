@@ -1,6 +1,6 @@
 # Template file for 'so'
 pkgname=so
-version=0.4.6
+version=0.4.10
 revision=1
 build_style=cargo
 hostmakedepends="pkg-config"
@@ -9,8 +9,9 @@ short_desc="Terminal interface for Stack Overflow"
 maintainer="Benjamín Albiñana <benalb@gmail.com>"
 license="MIT"
 homepage="https://github.com/samtay/so"
-distfiles="https://github.com/samtay/so/archive/v${version}.tar.gz"
-checksum=47a3cf5cef9d87dea223ef1c8fae3cf8c2ae0673d9eb4c8d73d733ce8ff45619
+changelog="https://raw.githubusercontent.com/samtay/so/main/CHANGELOG.md"
+distfiles="https://github.com/samtay/so/archive/refs/tags/v${version}.tar.gz"
+checksum=36d8bc53b9c05e242fd4c9ba8ae447fae6c4a35d8c7e071f8994a7c0f07c225d
 
 post_install() {
 	vlicense LICENSE

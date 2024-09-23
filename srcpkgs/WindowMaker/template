@@ -1,7 +1,7 @@
 # Template file for 'WindowMaker'
 pkgname=WindowMaker
-version=0.95.9
-revision=1
+version=0.96.0
+revision=2
 build_style=gnu-configure
 configure_args="--enable-xinerama --localedir=/usr/share/locale
  --enable-usermenu --enable-modelock --enable-xrandr --enable-wmreplace
@@ -11,17 +11,20 @@ makedepends="libXinerama-devel libXrandr-devel libXmu-devel libXpm-devel
  libXft-devel libpng-devel tiff-devel giflib-devel fontconfig-devel
  libexif-devel"
 conf_files="
-	/etc/WindowMaker/WindowMaker
-	/etc/WindowMaker/WMRootMenu
-	/etc/WindowMaker/WMWindowAttributes
-	/etc/WindowMaker/WMState
-	/etc/WindowMaker/WMGLOBAL"
+ /etc/WindowMaker/WindowMaker
+ /etc/WindowMaker/WMRootMenu
+ /etc/WindowMaker/WMWindowAttributes
+ /etc/WindowMaker/WMState
+ /etc/WindowMaker/WMGLOBAL"
 short_desc="X11 window manager with a NEXTSTEP look and feel"
 maintainer="Orphaned <orphan@voidlinux.org>"
 license="GPL-2.0-or-later, WTFPL"
-homepage="http://www.windowmaker.org/"
-distfiles="http://windowmaker.org/pub/source/release/${pkgname}-${version}.tar.gz"
-checksum=f22358ff60301670e1e2b502faad0f2da7ff8976632d538f95fe4638e9c6b714
+homepage="https://www.windowmaker.org/"
+changelog="http://www.windowmaker.org/news/"
+distfiles="https://github.com/window-maker/wmaker/releases/download/wmaker-${version}/WindowMaker-${version}.tar.gz"
+checksum=4fe130ba23cf4aa21c156ec8f01f748df537d0604ec06c6bbcec896df1926f6d
+# tests various things against documentation, doesn't make sense to run
+make_check=no
 
 pre_configure() {
 	autoreconf -fi
@@ -33,7 +36,6 @@ post_configure() {
 
 post_install() {
 	vlicense COPYING.WTFPL
-	vinstall ${FILESDIR}/wmaker.desktop 644 usr/share/xsessions
 }
 
 WindowMaker-devel_package() {

@@ -1,19 +1,22 @@
 # Template file for 'git-cliff'
 pkgname=git-cliff
-version=0.7.0
+version=2.6.0
 revision=1
 archs="x86_64* i686* aarch64* arm*" # ring
 build_style=cargo
 build_helper=qemu
 make_install_args="--path git-cliff"
-make_check_args="-- --skip repo::test::git_log" # This test fails without a git repo
+# These tests fail without a git repo
+make_check_args="-- --skip repo::"
+hostmakedepends="pkg-config"
+makedepends="libgit2-1.8-devel libzstd-devel"
 short_desc="Changelog generator based on conventional commits"
-maintainer="Jan Christian Grünhage <jan.christian@gruenhage.xyz>"
-license="GPL-3.0-only"
+maintainer="tranzystorekk <tranzystorek.io@protonmail.com>"
+license="Apache-2.0, MIT"
 homepage="https://github.com/orhun/git-cliff"
 changelog="https://raw.githubusercontent.com/orhun/git-cliff/main/CHANGELOG.md"
 distfiles="https://github.com/orhun/git-cliff/archive/refs/tags/v${version}.tar.gz"
-checksum=e4c643fd6e75416f13f6c39ef8baecfe1de1c1c09455b8055510b8a273fbf48f
+checksum=0018be6e72a3133dbcd2e17ee4e12bbdc8d2762a38624d9590beced871314f9d
 
 post_install() {
 	vdoc README.md
@@ -23,4 +26,11 @@ post_install() {
 	vcompletion "_git-cliff" zsh
 	vcompletion "git-cliff.fish" fish
 	vcompletion "git-cliff.bash" bash
+
+	OUT_DIR=${PWD} vtargetrun ${DESTDIR}/usr/bin/git-cliff-mangen
+	vman git-cliff.1
+
+	rm ${DESTDIR}/usr/bin/git-cliff-{completions,mangen}
+
+	vlicense LICENSE-MIT
 }

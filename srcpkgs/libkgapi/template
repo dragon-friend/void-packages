@@ -1,17 +1,21 @@
 # Template file for 'libkgapi'
 pkgname=libkgapi
-version=22.04.1
+version=24.08.1
 revision=1
 build_style=cmake
-hostmakedepends="extra-cmake-modules qt5-host-tools qt5-qmake python3
- gettext kcoreaddons"
-makedepends="kcalendarcore-devel kcontacts-devel kio-devel qt5-location-devel"
+configure_args="-DBUILD_TESTING=OFF -DKF6_HOST_TOOLING=/usr/lib/cmake
+ -DKDE_INSTALL_QTPLUGINDIR=lib/qt6/plugins
+ -DKDE_INSTALL_QMLDIR=lib/qt6/qml
+ -DECM_MKSPECS_INSTALL_DIR=/usr/lib/qt6/mkspecs/modules"
+hostmakedepends="extra-cmake-modules qt6-base python3 qt6-tools kf6-kconfig
+ gettext kf6-kcoreaddons"
+makedepends="kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-kio-devel"
 short_desc="KDE-based library for accessing various Google services"
 maintainer="John <me@johnnynator.dev>"
 license="LGPL-2.1-or-later"
 homepage="https://invent.kde.org/pim/libkgapi"
 distfiles="${KDE_SITE}/release-service/${version}/src/${pkgname}-${version}.tar.xz"
-checksum=94e05f3a289b2a3db3d7119ea95063dcba0636a4ce148ea9913eeaf5051b0a9f
+checksum=c24edc751f66b6c468ac1e91df3f2c4114a622d93ebba900b978e9ad13db8ff3
 
 do_check() {
 	:
@@ -23,7 +27,6 @@ libkgapi-devel_package() {
 	pkg_install() {
 		vmove usr/include
 		vmove usr/lib/cmake
-		vmove usr/lib/qt5/mkspecs
 		vmove "usr/lib/*.so"
 	}
 }

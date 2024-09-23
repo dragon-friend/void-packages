@@ -1,14 +1,13 @@
 # Template file for 'vale-style-microsoft'
 pkgname=vale-style-microsoft
-version=0.8.1
+version=0.14.1
 revision=1
-wrksrc=Microsoft-${version}
 short_desc="Vale-compatible implementation of the Microsoft Writing Style Guide"
-maintainer="Paper <paper@tilde.institute>"
+maintainer="Orphaned <orphan@voidlinux.org>"
 license="MIT"
 homepage="https://github.com/errata-ai/Microsoft/"
-distfiles="https://github.com/errata-ai/Microsoft/archive/v${version}.tar.gz"
-checksum=efb23757ded10679574dd10b280769a04beb567b57bb7ac625241152cd7249cd
+distfiles="https://github.com/errata-ai/Microsoft/archive/refs/tags/v${version}.tar.gz"
+checksum=457b411efe3de09a7a79be8cab8d1246f4b431ad44981f20c91b5f8ce99f4a54
 
 do_install() {
 	for f in Microsoft/*.yml; do

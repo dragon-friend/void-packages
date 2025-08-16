@@ -1,6 +1,6 @@
 # Template file for 'ksystemstats'
 pkgname=ksystemstats
-version=6.1.5
+version=6.4.3
 revision=1
 build_style=cmake
 configure_args="-DKDE_INSTALL_QMLDIR=lib/qt6/qml
@@ -13,7 +13,7 @@ maintainer="John <me@johnnynator.dev>"
 license="GPL-3.0-only,LGPL-3.0-only"
 homepage="https://invent.kde.org/plasma/ksystemstats"
 distfiles="${KDE_SITE}/plasma/${version}/${pkgname}-${version}.tar.xz"
-checksum=8425bb9f076234d167eaf689b74f729e2a0561c367473e8a84fab4a4c39c6893
+checksum=0d1bdb518fd723555110f8dc4ed9b509b03b267e40cc2d709587af2c4ce8da0c
 
 do_check() {
 	cd build

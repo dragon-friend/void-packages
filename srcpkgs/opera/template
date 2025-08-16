@@ -1,16 +1,16 @@
 # Template file for 'opera'
 pkgname=opera
-version=112.0.5197.53
+version=120.0.5543.38
 revision=1
 archs="x86_64"
 create_wrksrc=yes
-depends="ffmpeg desktop-file-utils hicolor-icon-theme"
+depends="ffmpeg6 desktop-file-utils hicolor-icon-theme libcanberra-gtk3 gsettings-desktop-schemas"
 short_desc="Fast, secure, easy to use browser"
 maintainer="mobinmob <mobinmob@disroot.org>"
 license="custom:Proprietary"
 homepage="https://www.opera.com/computer"
 distfiles="https://get.geo.opera.com/pub/opera/desktop/${version}/linux/opera-stable_${version}_amd64.rpm"
-checksum=d79ac7bafd46625c3fb0cc3ef7552aa66373912d528322a74be4c1a8ecff67ab
+checksum=235a960c11ba614409f0c34fb07360cca63ac40aaa94c3088e8eb7416175908d
 repository="nonfree"
 nostrip=yes
 
